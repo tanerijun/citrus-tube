@@ -1,3 +1,3 @@
 # CitrusTube
 
-A video sharing platform inspired by Youtube
+A citrus-flavored video sharing platform inspired by Youtube
