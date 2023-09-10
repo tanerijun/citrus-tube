@@ -1,4 +1,6 @@
 import type { V2_MetaFunction } from "@remix-run/node"
+import { db } from "~/lib/db/client.server"
+import { users } from "~/lib/db/schema.server"
 
 export const meta: V2_MetaFunction = () => {
 	return [
@@ -8,6 +10,15 @@ export const meta: V2_MetaFunction = () => {
 			content: "A citrus-flavored video sharing platform inspired by Youtube",
 		},
 	]
+}
+
+export const loader = async () => {
+	// Testing DB
+	// db.insert(users).values({ username: "Yes", email: "yes@gmail.com", password: "yesyesyes" }).run()
+
+	// const allUsers = db.select().from(users).all()
+	// console.log(allUsers)
+	return null
 }
 
 export default function Index() {
