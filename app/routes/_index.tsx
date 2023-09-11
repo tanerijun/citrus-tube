@@ -1,4 +1,5 @@
-import type { V2_MetaFunction } from "@remix-run/node"
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node"
+import { authenticator } from "~/lib/auth/authenticator.server"
 import { db } from "~/lib/db/client.server"
 import { createAccount, getAccount } from "~/lib/services/account.server"
 
@@ -12,25 +13,9 @@ export const meta: V2_MetaFunction = () => {
 	]
 }
 
-export const loader = async () => {
-	// Testing DB
-	// db.insert(users).values({ username: "Yes", email: "yes@gmail.com", password: "yesyesyes" }).run()
+export const loader = async ({ request }: LoaderArgs) => {
+	const user = await authenticator.isAuthenticated(request, { failureRedirect: "/login" })
 
-	// const allUsers = db.select().from(users).all()
-	// console.log(allUsers)
-
-	// console.log(db.query.user)
-
-	// const res = await createAccount({
-	// 	username: "yesmen",
-	// 	email: "yesyesmen@gmail.com",
-	// 	password: "abogoboga",
-	// })
-
-	// console.log(res)
-
-	const res = await getAccount({ email: "yesyesmen@gmail.com", password: "abogoboga" })
-	console.log(res)
 	return null
 }
 
