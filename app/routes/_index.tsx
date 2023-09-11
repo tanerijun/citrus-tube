@@ -1,6 +1,6 @@
 import type { V2_MetaFunction } from "@remix-run/node"
 import { db } from "~/lib/db/client.server"
-import { users } from "~/lib/db/schema.server"
+import { createAccount } from "~/lib/services/account.server"
 
 export const meta: V2_MetaFunction = () => {
 	return [
@@ -18,6 +18,16 @@ export const loader = async () => {
 
 	// const allUsers = db.select().from(users).all()
 	// console.log(allUsers)
+
+	// console.log(db.query.user)
+
+	// const res = await createAccount({
+	// 	username: "yesmen",
+	// 	email: "yesyesmen@gmail.com",
+	// 	password: "abogoboga",
+	// })
+
+	// console.log(res)
 	return null
 }
 
