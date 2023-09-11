@@ -18,3 +18,18 @@ test("hashing and verifying", async () => {
 
 	expect(isValidPassword).toEqual(true)
 })
+
+test("hashing and verifying with pepper", async () => {
+	const pepper = "pepper"
+	const password = "password"
+
+	const hashedPassword = await hash({ password, pepper })
+
+	let isValidPassword = await verify({ password, hash: hashedPassword })
+
+	expect(isValidPassword).toEqual(false)
+
+	isValidPassword = await verify({ password, pepper, hash: hashedPassword })
+
+	expect(isValidPassword).toEqual(true)
+})
