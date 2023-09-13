@@ -1,13 +1,1 @@
-{
-  "version": "5",
-  "dialect": "sqlite",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "5",
-      "when": 1694409626275,
-      "tag": "0000_outgoing_big_bertha",
-      "breakpoints": true
-    }
-  ]
-}
+{"version":"5","dialect":"sqlite","entries":[{"idx":0,"version":"5","when":1694409626275,"tag":"0000_outgoing_big_bertha","breakpoints":true}]}

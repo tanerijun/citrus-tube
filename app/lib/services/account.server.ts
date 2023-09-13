@@ -18,7 +18,6 @@ export async function createAccount(userData: Pick<User, "username" | "email" | 
 	const newUser: NewUser = {
 		...rest,
 		password: hashedPassword,
-		createdAt: new Date(),
 	}
 
 	const res = db.insert(user).values(newUser).returning().get()

@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm"
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
 
 export const user = sqliteTable("user", {
@@ -5,7 +6,7 @@ export const user = sqliteTable("user", {
 	username: text("username").notNull(),
 	email: text("email").notNull(),
 	password: text("password").notNull(),
-	createdAt: integer("created_at", { mode: "timestamp" }),
+	createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch('now'))`),
 })
 
 export type User = typeof user.$inferSelect
