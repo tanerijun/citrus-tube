@@ -6,8 +6,6 @@ import {
 } from "@remix-run/node"
 import { Form, useLoaderData } from "@remix-run/react"
 import { authenticator } from "~/lib/auth/authenticator.server"
-import { db } from "~/lib/db/client.server"
-import { createAccount, getAccount } from "~/lib/services/account.server"
 
 export const meta: MetaFunction = () => {
 	return [
