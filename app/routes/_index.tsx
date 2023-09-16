@@ -1,10 +1,15 @@
-import { type ActionArgs, json, type LoaderArgs, type V2_MetaFunction } from "@remix-run/node"
+import {
+	type ActionFunctionArgs,
+	json,
+	type LoaderFunctionArgs,
+	type MetaFunction,
+} from "@remix-run/node"
 import { Form, useLoaderData } from "@remix-run/react"
 import { authenticator } from "~/lib/auth/authenticator.server"
 import { db } from "~/lib/db/client.server"
 import { createAccount, getAccount } from "~/lib/services/account.server"
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
 	return [
 		{ title: "CitrusTube" },
 		{
@@ -14,13 +19,13 @@ export const meta: V2_MetaFunction = () => {
 	]
 }
 
-export const loader = async ({ request }: LoaderArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const user = await authenticator.isAuthenticated(request, { failureRedirect: "/login" })
 
 	return json(user)
 }
 
-export const action = async ({ request }: ActionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
 	await authenticator.logout(request, { redirectTo: "/" })
 }
 

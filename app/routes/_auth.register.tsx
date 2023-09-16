@@ -1,13 +1,13 @@
-import { type LoaderArgs, type ActionArgs, redirect } from "@remix-run/node"
+import { type LoaderFunctionArgs, type ActionFunctionArgs, redirect } from "@remix-run/node"
 import { Form } from "@remix-run/react"
 import { authenticator } from "~/lib/auth/authenticator.server"
 import { createAccount } from "~/lib/services/account.server"
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
 	return authenticator.isAuthenticated(request, { successRedirect: "/" })
 }
 
-export async function action({ request }: ActionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
 	const formData = await request.formData()
 	const username = formData.get("username")
 	const email = formData.get("email")
