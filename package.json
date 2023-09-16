@@ -18,6 +18,7 @@
     "@remix-run/node": "latest",
     "@remix-run/react": "latest",
     "@remix-run/serve": "latest",
+    "@types/web": "^0.0.114",
     "better-sqlite3": "^8.6.0",
     "drizzle-orm": "^0.28.6",
     "isbot": "^3.6.8",
