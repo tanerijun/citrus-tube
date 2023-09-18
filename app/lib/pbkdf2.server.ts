@@ -15,11 +15,7 @@ type HashArgs = {
  *    pepper: context.authPepper,
  *  })
  */
-export const hash = async ({
-	password,
-	pepper = process.env.HASH_PEPPER,
-	iterations = 1e5,
-}: HashArgs) => {
+export const hash = async ({ password, pepper, iterations = 1e5 }: HashArgs) => {
 	const passwordUtf = new TextEncoder().encode(`${password}${pepper}`) // encode pw as UTF-8
 	const passwordKey = await crypto.subtle.importKey("raw", passwordUtf, "PBKDF2", false, [
 		"deriveBits",
@@ -63,7 +59,7 @@ type VerifyArgs = {
  *     hash: dbUser.password,
  *   })
  */
-export const verify = async ({ hash, password, pepper = process.env.HASH_PEPPER }: VerifyArgs) => {
+export const verify = async ({ hash, password, pepper }: VerifyArgs) => {
 	let compositeString = null
 	try {
 		compositeString = (atob as (data: string) => string)(hash)

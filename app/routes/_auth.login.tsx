@@ -1,13 +1,15 @@
-import { type LoaderFunctionArgs, type ActionFunctionArgs } from "@remix-run/node"
+import { type LoaderFunctionArgs, type ActionFunctionArgs } from "@remix-run/cloudflare"
 import { Form } from "@remix-run/react"
-import { EMAIL_PASSWORD_STRATEGY, authenticator } from "~/lib/auth/authenticator.server"
+import { getAuth } from "~/lib/auth.server"
 
-export async function loader({ request }: LoaderFunctionArgs) {
-	return await authenticator.isAuthenticated(request, { successRedirect: "/" })
+export async function loader({ request, context }: LoaderFunctionArgs) {
+	return await getAuth(context).authenticator.isAuthenticated(request, { successRedirect: "/" })
 }
 
-export async function action({ request }: ActionFunctionArgs) {
-	return await authenticator.authenticate(EMAIL_PASSWORD_STRATEGY, request, {
+export async function action({ request, context }: ActionFunctionArgs) {
+	const auth = getAuth(context)
+
+	return await auth.authenticator.authenticate(auth.strategy.email, request, {
 		successRedirect: "/",
 	})
 }

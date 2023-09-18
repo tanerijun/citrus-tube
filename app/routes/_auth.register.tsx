@@ -1,13 +1,12 @@
-import { type LoaderFunctionArgs, type ActionFunctionArgs, redirect } from "@remix-run/node"
+import { type LoaderFunctionArgs, type ActionFunctionArgs, redirect } from "@remix-run/cloudflare"
 import { Form } from "@remix-run/react"
-import { authenticator } from "~/lib/auth/authenticator.server"
-import { createAccount } from "~/lib/services/account.server"
+import { getAuth } from "~/lib/auth.server"
 
-export async function loader({ request }: LoaderFunctionArgs) {
-	return authenticator.isAuthenticated(request, { successRedirect: "/" })
+export async function loader({ request, context }: LoaderFunctionArgs) {
+	return await getAuth(context).authenticator.isAuthenticated(request, { successRedirect: "/" })
 }
 
-export async function action({ request }: ActionFunctionArgs) {
+export async function action({ request, context }: ActionFunctionArgs) {
 	const formData = await request.formData()
 	const username = formData.get("username")
 	const email = formData.get("email")
@@ -18,7 +17,9 @@ export async function action({ request }: ActionFunctionArgs) {
 		throw new Error("Invalid form fields")
 	}
 
-	await createAccount({
+	const auth = getAuth(context)
+
+	await auth.register({
 		username: username.toString(),
 		email: email.toString(),
 		password: password.toString(),

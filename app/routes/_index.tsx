@@ -1,11 +1,7 @@
-import {
-	type ActionFunctionArgs,
-	json,
-	type LoaderFunctionArgs,
-	type MetaFunction,
-} from "@remix-run/node"
+import { json } from "@remix-run/cloudflare"
+import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare"
 import { Form, useLoaderData } from "@remix-run/react"
-import { authenticator } from "~/lib/auth/authenticator.server"
+import { getAuth } from "~/lib/auth.server"
 
 export const meta: MetaFunction = () => {
 	return [
@@ -17,21 +13,23 @@ export const meta: MetaFunction = () => {
 	]
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-	const user = await authenticator.isAuthenticated(request, { failureRedirect: "/login" })
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+	const user = await getAuth(context).authenticator.isAuthenticated(request, {
+		failureRedirect: "/login",
+	})
 
 	return json(user)
 }
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-	await authenticator.logout(request, { redirectTo: "/" })
+export const action = async ({ request, context }: ActionFunctionArgs) => {
+	await getAuth(context).authenticator.logout(request, { redirectTo: "/" })
 }
 
 export default function Index() {
 	const user = useLoaderData<typeof loader>()
 
 	return (
-		<div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+		<div>
 			<h1 className="text-red-500 underline">Hello {user.username}!</h1>
 			<Form method="post">
 				<button type="submit">Log out</button>

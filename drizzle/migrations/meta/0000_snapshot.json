@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "345ce907-4c68-4f9e-b93f-01fdd3e72806",
+  "id": "634c2470-b202-4c28-bec8-47c10e1936b3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "user": {
@@ -40,7 +40,8 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": "(unixepoch('now'))"
         }
       },
       "indexes": {},

@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test"
-import { hash, verify } from "./password-hash"
+import { hash, verify } from "./pbkdf2.server"
 
 test("hashing and verifying", async () => {
 	const password = "password"
