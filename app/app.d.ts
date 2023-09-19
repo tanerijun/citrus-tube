@@ -2,5 +2,5 @@
 
 interface ServiceWorkerGlobalScope {
 	auth: import("~/lib/auth.server").Auth
-	db: import("~/lib/db.server").DrizzleInstance
+	db: import("~/lib/db.server").Drizzle
 }
