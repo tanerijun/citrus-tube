@@ -7,6 +7,9 @@ export const user = sqliteTable("user", {
 	email: text("email").notNull(),
 	password: text("password").notNull(),
 	createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch('now'))`),
+	profileImage: text("profile_image"),
+	backgroundImage: text("background_image"),
+	description: text("description"),
 })
 
 export type User = typeof user.$inferSelect
