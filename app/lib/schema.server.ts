@@ -12,12 +12,20 @@ export const user = sqliteTable("user", {
 	description: text("description"),
 })
 
-// export const video = sqliteTable("video", {
-// 	id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-// 	title: text("title"),
-// 	description: text("description"),
-// 	thumbnail: text("thumbnail")
-// })
-
 export type User = typeof user.$inferSelect
 export type NewUser = typeof user.$inferInsert
+
+export const video = sqliteTable("video", {
+	id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+	title: text("title").notNull(),
+	description: text("description").notNull(),
+	thumbnailUrl: text("thumbnail_url").notNull(),
+	videoUrl: text("video_url").notNull(),
+	userId: integer("user_id")
+		.references(() => user.id, { onDelete: "cascade" })
+		.notNull(),
+	createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch('now'))`),
+})
+
+export type Video = typeof video.$inferSelect
+export type NewVideo = typeof video.$inferInsert
