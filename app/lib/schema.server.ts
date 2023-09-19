@@ -7,10 +7,17 @@ export const user = sqliteTable("user", {
 	email: text("email").notNull(),
 	password: text("password").notNull(),
 	createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch('now'))`),
-	profileImage: text("profile_image"),
-	backgroundImage: text("background_image"),
+	profileImageUrl: text("profile_image_url"),
+	backgroundImageUrl: text("background_image_url"),
 	description: text("description"),
 })
+
+// export const video = sqliteTable("video", {
+// 	id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+// 	title: text("title"),
+// 	description: text("description"),
+// 	thumbnail: text("thumbnail")
+// })
 
 export type User = typeof user.$inferSelect
 export type NewUser = typeof user.$inferInsert

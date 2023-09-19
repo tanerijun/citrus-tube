@@ -15,6 +15,13 @@
       "when": 1695106617299,
       "tag": "0001_curved_jack_flag",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1695110776636,
+      "tag": "0002_gorgeous_warlock",
+      "breakpoints": true
     }
   ]
 }
