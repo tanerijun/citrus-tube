@@ -17,6 +17,24 @@ export const user = sqliteTable("user", {
 export type User = typeof user.$inferSelect
 export type NewUser = typeof user.$inferInsert
 
+export const userFollowUser = sqliteTable(
+	"user_follow_user",
+	{
+		follower: integer("follower")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		following: integer("following")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+	},
+	(table) => {
+		return {
+			followerIdx: index("idx_user_follow_user_follower").on(table.follower),
+			followingIdx: index("idx_user_follow_user_following").on(table.following),
+		}
+	},
+)
+
 export const video = sqliteTable(
 	"video",
 	{
