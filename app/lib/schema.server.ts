@@ -6,7 +6,9 @@ export const user = sqliteTable("user", {
 	username: text("username").notNull().unique(),
 	email: text("email").notNull().unique(),
 	password: text("password").notNull(),
-	createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch('now'))`),
+	createdAt: integer("created_at", { mode: "timestamp" })
+		.default(sql`(unixepoch('now'))`)
+		.notNull(),
 	profileImageUrl: text("profile_image_url"),
 	backgroundImageUrl: text("background_image_url"),
 	description: text("description"),
@@ -26,7 +28,9 @@ export const video = sqliteTable(
 		userId: integer("user_id")
 			.references(() => user.id, { onDelete: "cascade" })
 			.notNull(),
-		createdAt: integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch('now'))`),
+		createdAt: integer("created_at", { mode: "timestamp" })
+			.default(sql`(unixepoch('now'))`)
+			.notNull(),
 	},
 	(table) => {
 		return {

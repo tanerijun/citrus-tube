@@ -5,43 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1695019474880,
-      "tag": "0000_broken_king_bedlam",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1695106617299,
-      "tag": "0001_curved_jack_flag",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1695110776636,
-      "tag": "0002_gorgeous_warlock",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1695111790961,
-      "tag": "0003_crazy_shriek",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1695120225226,
-      "tag": "0004_dry_ultron",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1695204754025,
-      "tag": "0005_typical_night_thrasher",
+      "when": 1695206856380,
+      "tag": "0000_open_polaris",
       "breakpoints": true
     }
   ]
