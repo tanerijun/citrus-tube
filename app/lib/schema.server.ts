@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm"
-import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core"
+import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core"
 
 export const user = sqliteTable("user", {
 	id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
@@ -37,3 +37,31 @@ export const video = sqliteTable(
 
 export type Video = typeof video.$inferSelect
 export type NewVideo = typeof video.$inferInsert
+
+export const videoView = sqliteTable("video_view", {
+	id: integer("id")
+		.primaryKey()
+		.references(() => video.id, { onDelete: "cascade" }),
+	count: integer("count").default(0).notNull(),
+})
+
+export const userLikeVideo = sqliteTable(
+	"user_like_video",
+	{
+		userId: integer("user_id")
+			.references(() => user.id, { onDelete: "cascade" })
+			.notNull(),
+		videoId: integer("video_id")
+			.references(() => video.id, { onDelete: "cascade" })
+			.notNull(),
+	},
+	(table) => {
+		return {
+			userIdVideoIdIdx: uniqueIndex("idx_user_like_video_user_id_video_id").on(
+				table.userId,
+				table.videoId,
+			),
+			videoIdIdx: index("idx_user_like_video_video_id").on(table.videoId),
+		}
+	},
+)
