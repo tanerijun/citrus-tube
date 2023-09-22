@@ -87,3 +87,25 @@ export const userLikeVideo = sqliteTable(
 		}
 	},
 )
+
+export const playlist = sqliteTable("playlist", {
+	id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+	title: text("title").notNull(),
+	desciption: text("description").notNull(),
+	userId: integer("user_id")
+		.references(() => user.id, { onDelete: "cascade" })
+		.notNull(),
+	createdAt: integer("created_at", { mode: "timestamp" })
+		.default(sql`(unixepoch('now'))`)
+		.notNull(),
+})
+
+// Primary key should be playlist ID, just like video_view
+export const playlistVideo = sqliteTable("playlist_video", {
+	playlistId: integer("playlist_id")
+		.primaryKey()
+		.references(() => playlist.id, { onDelete: "cascade" }),
+	videoId: integer("video_id")
+		.references(() => video.id, { onDelete: "cascade" })
+		.notNull(),
+})
