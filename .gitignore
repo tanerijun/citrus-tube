@@ -10,3 +10,5 @@ node_modules
 .wrangler
 
 /app/routes/admin.tsx
+drizzle/seedGenerator.ts
+drizzle/seed.sql

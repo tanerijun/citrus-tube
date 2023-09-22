@@ -11,7 +11,7 @@ type UserSession = Pick<User, "id" | "username">
 
 const EMAIL_PASSWORD_STRATEGY = "email-password-strategy"
 
-export class Auth {
+class Auth {
 	public authenticator
 	public strategy
 	private sessionStorage
@@ -117,10 +117,12 @@ export class Auth {
 	}
 }
 
+let auth: Auth | null = null
+
 export function getAuth(context: Record<string, unknown>) {
-	if (!self.auth) {
-		self.auth = new Auth(context)
+	if (!auth) {
+		auth = new Auth(context)
 	}
 
-	return self.auth
+	return auth
 }

@@ -13,12 +13,12 @@ const initializeDrizzleInstance = (context: Record<string, unknown>) => {
 	return drizzle(context.DB, { schema })
 }
 
-export type Drizzle = ReturnType<typeof initializeDrizzleInstance>
+let db: ReturnType<typeof initializeDrizzleInstance> | null = null
 
 export const getDb = (context: Record<string, unknown>) => {
-	if (!self.db) {
-		self.db = initializeDrizzleInstance(context)
+	if (!db) {
+		db = initializeDrizzleInstance(context)
 	}
 
-	return self.db
+	return db
 }
