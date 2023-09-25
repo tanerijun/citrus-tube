@@ -106,14 +106,22 @@ export const playlist = sqliteTable(
 	},
 )
 
-export const playlistHasVideo = sqliteTable("playlist_has_video", {
-	playlistId: integer("playlist_id")
-		.primaryKey()
-		.references(() => playlist.id, { onDelete: "cascade" }),
-	videoId: integer("video_id")
-		.references(() => video.id, { onDelete: "cascade" })
-		.notNull(),
-})
+export const playlistHasVideo = sqliteTable(
+	"playlist_has_video",
+	{
+		playlistId: integer("playlist_id")
+			.references(() => playlist.id, { onDelete: "cascade" })
+			.notNull(),
+		videoId: integer("video_id")
+			.references(() => video.id, { onDelete: "cascade" })
+			.notNull(),
+	},
+	(table) => {
+		return {
+			pk: primaryKey(table.playlistId, table.videoId),
+		}
+	},
+)
 
 export const comment = sqliteTable(
 	"comment",

@@ -8,6 +8,20 @@
       "when": 1695650654968,
       "tag": "0000_hot_micromax",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1695652504659,
+      "tag": "0001_cuddly_shatterstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1695652638238,
+      "tag": "0002_amusing_magma",
+      "breakpoints": true
     }
   ]
 }
