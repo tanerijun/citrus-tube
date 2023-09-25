@@ -22,6 +22,27 @@
       "when": 1695398593921,
       "tag": "0002_clear_guardian",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1695649034245,
+      "tag": "0003_stormy_karnak",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1695649058313,
+      "tag": "0004_milky_peter_parker",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1695649286535,
+      "tag": "0005_kind_scorpion",
+      "breakpoints": true
     }
   ]
 }

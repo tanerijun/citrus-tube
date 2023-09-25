@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm"
-import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core"
+import { index, integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core"
 
 export const user = sqliteTable("user", {
 	id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
@@ -79,29 +79,33 @@ export const userLikeVideo = sqliteTable(
 	},
 	(table) => {
 		return {
-			userIdVideoIdIdx: uniqueIndex("idx_user_like_video_user_id_video_id").on(
-				table.userId,
-				table.videoId,
-			),
+			pk: primaryKey(table.userId, table.videoId),
 			videoIdIdx: index("idx_user_like_video_video_id").on(table.videoId),
 		}
 	},
 )
 
-export const playlist = sqliteTable("playlist", {
-	id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-	title: text("title").notNull(),
-	desciption: text("description").notNull(),
-	userId: integer("user_id")
-		.references(() => user.id, { onDelete: "cascade" })
-		.notNull(),
-	createdAt: integer("created_at", { mode: "timestamp" })
-		.default(sql`(unixepoch('now'))`)
-		.notNull(),
-})
+export const playlist = sqliteTable(
+	"playlist",
+	{
+		id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+		title: text("title").notNull(),
+		desciption: text("description").notNull(),
+		userId: integer("user_id")
+			.references(() => user.id, { onDelete: "cascade" })
+			.notNull(),
+		createdAt: integer("created_at", { mode: "timestamp" })
+			.default(sql`(unixepoch('now'))`)
+			.notNull(),
+	},
+	(table) => {
+		return {
+			userIdIdx: index("idx_playlist_user_id").on(table.userId),
+		}
+	},
+)
 
-// Primary key should be playlist ID, just like video_view
-export const playlistVideo = sqliteTable("playlist_video", {
+export const playlistHasVideo = sqliteTable("playlist_has_video", {
 	playlistId: integer("playlist_id")
 		.primaryKey()
 		.references(() => playlist.id, { onDelete: "cascade" }),
