@@ -3,8 +3,8 @@ import { index, integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlit
 
 export const user = sqliteTable("user", {
 	id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-	username: text("username").notNull().unique(),
-	email: text("email").notNull().unique(),
+	username: text("username").unique().notNull(),
+	email: text("email").unique().notNull(),
 	password: text("password").notNull(),
 	createdAt: integer("created_at", { mode: "timestamp" })
 		.default(sql`(unixepoch('now'))`)
@@ -21,14 +21,15 @@ export const userFollowUser = sqliteTable(
 	"user_follow_user",
 	{
 		follower: integer("follower")
-			.notNull()
-			.references(() => user.id, { onDelete: "cascade" }),
+			.references(() => user.id, { onDelete: "cascade" })
+			.notNull(),
 		following: integer("following")
-			.notNull()
-			.references(() => user.id, { onDelete: "cascade" }),
+			.references(() => user.id, { onDelete: "cascade" })
+			.notNull(),
 	},
 	(table) => {
 		return {
+			pk: primaryKey(table.follower, table.following),
 			followerIdx: index("idx_user_follow_user_follower").on(table.follower),
 			followingIdx: index("idx_user_follow_user_following").on(table.following),
 		}
