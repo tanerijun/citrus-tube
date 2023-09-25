@@ -43,6 +43,20 @@
       "when": 1695649286535,
       "tag": "0005_kind_scorpion",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1695649671432,
+      "tag": "0006_deep_mongu",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1695650064282,
+      "tag": "0007_cool_sphinx",
+      "breakpoints": true
     }
   ]
 }

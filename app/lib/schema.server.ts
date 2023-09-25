@@ -113,3 +113,62 @@ export const playlistHasVideo = sqliteTable("playlist_has_video", {
 		.references(() => video.id, { onDelete: "cascade" })
 		.notNull(),
 })
+
+export const comment = sqliteTable(
+	"comment",
+	{
+		id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+		content: text("content").notNull(),
+		userId: integer("user_id")
+			.references(() => user.id, { onDelete: "cascade" })
+			.notNull(),
+		videoId: integer("video_id")
+			.references(() => video.id, { onDelete: "cascade" })
+			.notNull(),
+		createdAt: integer("created_at", { mode: "timestamp" })
+			.default(sql`(unixepoch('now'))`)
+			.notNull(),
+	},
+	(table) => {
+		return {
+			videoId: index("idx_comment_video_id").on(table.videoId),
+		}
+	},
+)
+
+export const post = sqliteTable(
+	"post",
+	{
+		id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+		content: text("content").notNull(),
+		userId: integer("user_id")
+			.references(() => user.id, { onDelete: "cascade" })
+			.notNull(),
+		createdAt: integer("created_at", { mode: "timestamp" })
+			.default(sql`(unixepoch('now'))`)
+			.notNull(),
+	},
+	(table) => {
+		return {
+			userId: index("idx_post_user_id").on(table.userId),
+		}
+	},
+)
+
+export const userLikePost = sqliteTable(
+	"user_like_post",
+	{
+		userId: integer("user_id")
+			.references(() => user.id, { onDelete: "cascade" })
+			.notNull(),
+		postId: integer("post_id")
+			.references(() => post.id, { onDelete: "cascade" })
+			.notNull(),
+	},
+	(table) => {
+		return {
+			pk: primaryKey(table.userId, table.postId),
+			postIdIdx: index("idx_user_like_post_post_id").on(table.postId),
+		}
+	},
+)
