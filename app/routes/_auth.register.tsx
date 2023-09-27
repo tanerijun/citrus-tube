@@ -1,5 +1,6 @@
 import { type LoaderFunctionArgs, type ActionFunctionArgs, redirect } from "@remix-run/cloudflare"
 import { Form, Link } from "@remix-run/react"
+import { IconCitrus } from "~/components/icons/citrus"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
@@ -33,7 +34,8 @@ export async function action({ request, context }: ActionFunctionArgs) {
 
 export default function Register() {
 	return (
-		<main className="mx-6 flex h-screen items-center justify-center">
+		<main className="mx-6 flex h-screen flex-col items-center justify-center gap-6">
+			<h2 className="text-2xl">Welcome to Citrus!</h2>
 			<Form
 				method="post"
 				className="border-input flex w-full flex-col gap-6 rounded-md border p-10 md:w-96"
