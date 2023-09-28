@@ -6,6 +6,8 @@ import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { getAuth } from "~/lib/auth.server"
 
+// TODO: schema. Add confirm password
+
 export async function loader({ request, context }: LoaderFunctionArgs) {
 	return await getAuth(context).authenticator.isAuthenticated(request, { successRedirect: "/" })
 }
