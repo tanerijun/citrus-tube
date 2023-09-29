@@ -2,10 +2,10 @@ import { Authenticator } from "remix-auth"
 import { FormStrategy } from "remix-auth-form"
 import { user } from "./schema.server"
 import type { NewUser, User } from "./schema.server"
-import { createCookieSessionStorage } from "@remix-run/cloudflare"
 import { getDb } from "./db.server"
 import { eq } from "drizzle-orm"
 import { hash, verify } from "./pbkdf2.server"
+import { getSessionStorage } from "./session.server"
 
 type UserSession = Pick<User, "id" | "username">
 
@@ -31,16 +31,7 @@ class Auth {
 
 		this.secretKey = context.SECRET_KEY
 
-		this.sessionStorage = createCookieSessionStorage({
-			cookie: {
-				name: "__session",
-				sameSite: "lax",
-				path: "/",
-				httpOnly: true,
-				secrets: [context.SECRET_KEY],
-				secure: process.env.NODE_ENV === "production",
-			},
-		})
+		this.sessionStorage = getSessionStorage()
 
 		this.db = getDb()
 
