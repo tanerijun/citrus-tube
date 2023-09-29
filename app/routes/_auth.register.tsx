@@ -11,8 +11,9 @@ import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { getAuth } from "~/lib/auth.server"
 import { parse } from "@conform-to/zod"
-import { useId } from "react"
+import { useEffect, useId } from "react"
 import { conform, useForm } from "@conform-to/react"
+import { useToast } from "~/components/ui/use-toast"
 
 const schema = z
 	.object({
@@ -73,7 +74,16 @@ export async function action({ request, context }: ActionFunctionArgs) {
 export default function Register() {
 	const data = useActionData<typeof action>()
 
+	const { toast } = useToast()
+
 	const msg = data?.message // TODO: show as notification
+
+	// useEffect(() => {
+	if (msg) {
+		console.log("FIRING TOAST")
+		toast({ title: "Error", description: msg })
+	}
+	// }, [msg, toast])
 
 	console.log(msg) //TODO: DELETE
 
