@@ -11,9 +11,9 @@ import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { getAuth } from "~/lib/auth.server"
 import { parse } from "@conform-to/zod"
-import { useEffect, useId } from "react"
+import { useId } from "react"
 import { conform, useForm } from "@conform-to/react"
-import { useToast } from "~/components/ui/use-toast"
+import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert"
 
 const schema = z
 	.object({
@@ -74,19 +74,6 @@ export async function action({ request, context }: ActionFunctionArgs) {
 export default function Register() {
 	const data = useActionData<typeof action>()
 
-	const { toast } = useToast()
-
-	const msg = data?.message // TODO: show as notification
-
-	// useEffect(() => {
-	if (msg) {
-		console.log("FIRING TOAST")
-		toast({ title: "Error", description: msg })
-	}
-	// }, [msg, toast])
-
-	console.log(msg) //TODO: DELETE
-
 	const id = useId()
 
 	const [form, fields] = useForm({
@@ -106,6 +93,11 @@ export default function Register() {
 				className="border-input flex w-full flex-col gap-6 rounded-md border p-10 md:w-96"
 				{...form.props}
 			>
+				{data?.message && (
+					<Alert variant="destructive" className="text-center">
+						<AlertDescription>{data.message}</AlertDescription>
+					</Alert>
+				)}
 				<div className="flex flex-col gap-2">
 					<Label htmlFor={fields.username.id}>Username</Label>
 					<Input {...conform.input(fields.username, { type: "text" })} />

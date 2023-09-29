@@ -5,6 +5,7 @@ import { Form, Link, useActionData } from "@remix-run/react"
 import { useId } from "react"
 import { AuthorizationError } from "remix-auth"
 import { z } from "zod"
+import { Alert, AlertDescription } from "~/components/ui/alert"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
@@ -47,8 +48,6 @@ export async function action({ request, context }: ActionFunctionArgs) {
 export default function Login() {
 	const data = useActionData<typeof action>()
 
-	const msg = data?.message // TODO: toast this message if it exist
-
 	const id = useId()
 
 	const [form, fields] = useForm({
@@ -68,6 +67,11 @@ export default function Login() {
 				className="border-input flex w-full flex-col gap-6 rounded-md border p-10 md:w-96"
 				{...form.props}
 			>
+				{data?.message && (
+					<Alert variant="destructive" className="text-center">
+						<AlertDescription>{data.message}</AlertDescription>
+					</Alert>
+				)}
 				<div className="flex flex-col gap-2">
 					<Label htmlFor={fields.email.id}>Email</Label>
 					<Input {...conform.input(fields.email, { type: "email" })} />
