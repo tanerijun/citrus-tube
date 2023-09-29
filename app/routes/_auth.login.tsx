@@ -10,6 +10,7 @@ import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { getAuth } from "~/lib/auth.server"
+import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
 
 const schema = z.object({
 	email: z.string({ required_error: "Email is required" }).email("Email is invalid"),
@@ -72,24 +73,24 @@ export default function Login() {
 						<AlertDescription>{data.message}</AlertDescription>
 					</Alert>
 				)}
-				<div className="flex flex-col gap-2">
+				<AutoAnimatedContainer className="flex flex-col gap-2">
 					<Label htmlFor={fields.email.id}>Email</Label>
 					<Input {...conform.input(fields.email, { type: "email" })} />
 					{fields.email.error && (
-						<p id={fields.email.errorId} className="text-destructive text-sm">
+						<p id={fields.email.errorId} className="text-destructive text-xs">
 							{fields.email.error}
 						</p>
 					)}
-				</div>
-				<div className="flex flex-col gap-2">
+				</AutoAnimatedContainer>
+				<AutoAnimatedContainer className="flex flex-col gap-2">
 					<Label htmlFor={fields.password.id}>Password</Label>
 					<Input {...conform.input(fields.password, { type: "password" })} />
 					{fields.password.error && (
-						<p id={fields.password.errorId} className="text-destructive text-sm">
+						<p id={fields.password.errorId} className="text-destructive text-xs">
 							{fields.password.error}
 						</p>
 					)}
-				</div>
+				</AutoAnimatedContainer>
 				<Button type="submit">Login</Button>
 				<small>
 					Don't have an account?{" "}

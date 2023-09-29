@@ -13,7 +13,8 @@ import { getAuth } from "~/lib/auth.server"
 import { parse } from "@conform-to/zod"
 import { useId } from "react"
 import { conform, useForm } from "@conform-to/react"
-import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert"
+import { Alert, AlertDescription } from "~/components/ui/alert"
+import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
 
 const schema = z
 	.object({
@@ -98,42 +99,42 @@ export default function Register() {
 						<AlertDescription>{data.message}</AlertDescription>
 					</Alert>
 				)}
-				<div className="flex flex-col gap-2">
+				<AutoAnimatedContainer className="flex flex-col gap-2">
 					<Label htmlFor={fields.username.id}>Username</Label>
 					<Input {...conform.input(fields.username, { type: "text" })} />
 					{fields.username.error && (
-						<p id={fields.username.errorId} className="text-destructive text-sm">
+						<p id={fields.username.errorId} className="text-destructive text-xs">
 							{fields.username.error}
 						</p>
 					)}
-				</div>
-				<div className="flex flex-col gap-2">
+				</AutoAnimatedContainer>
+				<AutoAnimatedContainer className="flex flex-col gap-2">
 					<Label htmlFor={fields.email.id}>Email</Label>
 					<Input {...conform.input(fields.email, { type: "email" })} />
 					{fields.email.error && (
-						<p id={fields.email.errorId} className="text-destructive text-sm">
+						<p id={fields.email.errorId} className="text-destructive text-xs">
 							{fields.email.error}
 						</p>
 					)}
-				</div>
-				<div className="flex flex-col gap-2">
+				</AutoAnimatedContainer>
+				<AutoAnimatedContainer className="flex flex-col gap-2">
 					<Label htmlFor={fields.password.id}>Password</Label>
 					<Input {...conform.input(fields.password, { type: "password" })} />
 					{fields.password.error && (
-						<p id={fields.password.errorId} className="text-destructive text-sm">
+						<p id={fields.password.errorId} className="text-destructive text-xs">
 							{fields.password.error}
 						</p>
 					)}
-				</div>
-				<div className="flex flex-col gap-2">
+				</AutoAnimatedContainer>
+				<AutoAnimatedContainer className="flex flex-col gap-2">
 					<Label htmlFor={fields.confirmPassword.id}>Confirm password</Label>
 					<Input {...conform.input(fields.confirmPassword, { type: "password" })} />
 					{fields.confirmPassword.error && (
-						<p id={fields.confirmPassword.errorId} className="text-destructive text-sm">
+						<p id={fields.confirmPassword.errorId} className="text-destructive text-xs">
 							{fields.confirmPassword.error}
 						</p>
 					)}
-				</div>
+				</AutoAnimatedContainer>
 				<Button type="submit">Register</Button>
 				<small>
 					Already have an account?{" "}
