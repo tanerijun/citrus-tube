@@ -60,11 +60,11 @@ export default function Login() {
 	})
 
 	return (
-		<main className="mx-6 flex h-screen flex-col items-center justify-center gap-6">
+		<main className="mx-10 flex h-screen flex-col items-center justify-center gap-6">
 			<h2 className="text-2xl">Welcome back to Citrus!</h2>
 			<Form
 				method="post"
-				className="border-input flex w-full flex-col gap-6 rounded-md border p-10 md:w-96"
+				className="border-input flex w-full flex-col gap-6 rounded-md border p-12 md:w-[32rem]"
 				{...form.props}
 			>
 				{data?.message && (
