@@ -42,7 +42,7 @@ class Auth {
 			},
 		})
 
-		this.db = getDb(context)
+		this.db = getDb()
 
 		this.strategy = {
 			email: EMAIL_PASSWORD_STRATEGY,

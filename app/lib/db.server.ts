@@ -15,9 +15,15 @@ const initializeDrizzleInstance = (context: Record<string, unknown>) => {
 
 let db: ReturnType<typeof initializeDrizzleInstance> | null = null
 
-export const getDb = (context: Record<string, unknown>) => {
+export const initializeDb = (context: Record<string, unknown>) => {
 	if (!db) {
 		db = initializeDrizzleInstance(context)
+	}
+}
+
+export const getDb = () => {
+	if (!db) {
+		throw new Error("DB not initialized")
 	}
 
 	return db
