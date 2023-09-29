@@ -39,11 +39,11 @@ const schema = z
 		}
 	})
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
-	return await getAuth(context).authenticator.isAuthenticated(request, { successRedirect: "/" })
+export async function loader({ request }: LoaderFunctionArgs) {
+	return await getAuth().authenticator.isAuthenticated(request, { successRedirect: "/" })
 }
 
-export async function action({ request, context }: ActionFunctionArgs) {
+export async function action({ request }: ActionFunctionArgs) {
 	const formData = await request.clone().formData()
 
 	const submission = parse(formData, { schema })
@@ -53,7 +53,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
 		return json({ submission, message: null })
 	}
 
-	const auth = getAuth(context)
+	const auth = getAuth()
 
 	const { username, email, password } = submission.value
 

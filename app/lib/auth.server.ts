@@ -129,9 +129,15 @@ class Auth {
 
 let auth: Auth | null = null
 
-export function getAuth(context: Record<string, unknown>) {
+export const initializeAuth = (context: Record<string, unknown>) => {
 	if (!auth) {
 		auth = new Auth(context)
+	}
+}
+
+export function getAuth() {
+	if (!auth) {
+		throw new Error("Auth not initialized")
 	}
 
 	return auth

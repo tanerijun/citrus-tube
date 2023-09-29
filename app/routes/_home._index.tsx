@@ -3,16 +3,16 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/cloudfla
 import { Form, useLoaderData } from "@remix-run/react"
 import { getAuth } from "~/lib/auth.server"
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
-	const user = await getAuth(context).authenticator.isAuthenticated(request, {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+	const user = await getAuth().authenticator.isAuthenticated(request, {
 		failureRedirect: "/login",
 	})
 
 	return json(user)
 }
 
-export const action = async ({ request, context }: ActionFunctionArgs) => {
-	await getAuth(context).authenticator.logout(request, { redirectTo: "/" })
+export const action = async ({ request }: ActionFunctionArgs) => {
+	await getAuth().authenticator.logout(request, { redirectTo: "/" })
 }
 
 export default function Index() {

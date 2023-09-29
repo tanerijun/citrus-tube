@@ -12,8 +12,8 @@ export const meta: MetaFunction = () => {
 	]
 }
 
-export const loader = async ({ request, context }: LoaderFunctionArgs) => {
-	const user = await getAuth(context).authenticator.isAuthenticated(request, {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+	const user = await getAuth().authenticator.isAuthenticated(request, {
 		failureRedirect: "/login",
 	})
 
