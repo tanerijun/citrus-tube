@@ -1,17 +1,7 @@
 import { json } from "@remix-run/cloudflare"
-import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare"
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/cloudflare"
 import { Form, useLoaderData } from "@remix-run/react"
 import { getAuth } from "~/lib/auth.server"
-
-export const meta: MetaFunction = () => {
-	return [
-		{ title: "CitrusTube" },
-		{
-			name: "description",
-			content: "A citrus-flavored video sharing platform inspired by Youtube",
-		},
-	]
-}
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	const user = await getAuth(context).authenticator.isAuthenticated(request, {
