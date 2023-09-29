@@ -1,11 +1,12 @@
 import { Authenticator } from "remix-auth"
 import { FormStrategy } from "remix-auth-form"
+import { eq } from "drizzle-orm"
 import { user } from "./schema.server"
 import type { NewUser, User } from "./schema.server"
 import { getDb } from "./db.server"
-import { eq } from "drizzle-orm"
 import { hash, verify } from "./pbkdf2.server"
 import { getSessionStorage } from "./session.server"
+import { contextHasSecret } from "./helpers/context-type"
 
 type UserSession = Pick<User, "id" | "username">
 
@@ -19,12 +20,6 @@ class Auth {
 	private secretKey
 
 	constructor(context: Record<string, unknown>) {
-		const contextHasSecret = (
-			context: Record<string, unknown>,
-		): context is { SECRET_KEY: string } => {
-			return "SECRET_KEY" in context
-		}
-
 		if (!contextHasSecret(context)) {
 			throw new Error("No SECRET_KEY in context")
 		}

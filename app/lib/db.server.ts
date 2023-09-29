@@ -1,9 +1,6 @@
 import { drizzle } from "drizzle-orm/d1"
 import * as schema from "./schema.server"
-
-const contextHasDb = (context: Record<string, unknown>): context is { DB: D1Database } => {
-	return "DB" in context
-}
+import { contextHasDb } from "./helpers/context-type"
 
 const initializeDrizzleInstance = (context: Record<string, unknown>) => {
 	if (!contextHasDb(context)) {
@@ -15,13 +12,13 @@ const initializeDrizzleInstance = (context: Record<string, unknown>) => {
 
 let db: ReturnType<typeof initializeDrizzleInstance> | null = null
 
-export const initializeDb = (context: Record<string, unknown>) => {
+export function initializeDb(context: Record<string, unknown>) {
 	if (!db) {
 		db = initializeDrizzleInstance(context)
 	}
 }
 
-export const getDb = () => {
+export function getDb() {
 	if (!db) {
 		throw new Error("DB not initialized")
 	}
