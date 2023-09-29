@@ -88,14 +88,24 @@ class Auth {
 	}
 
 	public async register(userData: Pick<User, "username" | "email" | "password">) {
-		const existingUser = await this.db
+		const existingUsername = await this.db
+			.select()
+			.from(user)
+			.where(eq(user.username, userData.username))
+			.get()
+
+		if (existingUsername) {
+			throw new Error("Username already used")
+		}
+
+		const existingEmail = await this.db
 			.select()
 			.from(user)
 			.where(eq(user.email, userData.email))
 			.get()
 
-		if (existingUser) {
-			throw new Error("User already exist")
+		if (existingEmail) {
+			throw new Error("Email already used")
 		}
 
 		const { password, ...rest } = userData

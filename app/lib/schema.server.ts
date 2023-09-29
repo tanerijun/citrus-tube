@@ -1,18 +1,27 @@
 import { sql } from "drizzle-orm"
 import { index, integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core"
 
-export const user = sqliteTable("user", {
-	id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-	username: text("username").unique().notNull(),
-	email: text("email").unique().notNull(),
-	password: text("password").notNull(),
-	createdAt: integer("created_at", { mode: "timestamp" })
-		.default(sql`(unixepoch('now'))`)
-		.notNull(),
-	profileImageUrl: text("profile_image_url"),
-	backgroundImageUrl: text("background_image_url"),
-	description: text("description"),
-})
+export const user = sqliteTable(
+	"user",
+	{
+		id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+		username: text("username").unique().notNull(),
+		email: text("email").unique().notNull(),
+		password: text("password").notNull(),
+		createdAt: integer("created_at", { mode: "timestamp" })
+			.default(sql`(unixepoch('now'))`)
+			.notNull(),
+		profileImageUrl: text("profile_image_url"),
+		backgroundImageUrl: text("background_image_url"),
+		description: text("description"),
+	},
+	(table) => {
+		return {
+			usernameIdx: index("idx_user_username").on(table.username),
+			usernameEmail: index("idx_user_email").on(table.email),
+		}
+	},
+)
 
 export type User = typeof user.$inferSelect
 export type NewUser = typeof user.$inferInsert
