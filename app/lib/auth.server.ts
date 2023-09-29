@@ -8,7 +8,7 @@ import { hash, verify } from "./pbkdf2.server"
 import { getSessionStorage } from "./session.server"
 import { contextHasSecret } from "./helpers/context-type"
 
-type UserSession = Pick<User, "id" | "username">
+export type UserSession = Pick<User, "id" | "username">
 
 const EMAIL_PASSWORD_STRATEGY = "email-password-strategy"
 

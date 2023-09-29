@@ -15,6 +15,7 @@ import { useId } from "react"
 import { conform, useForm } from "@conform-to/react"
 import { Alert, AlertDescription } from "~/components/ui/alert"
 import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
+import { getSessionStorage } from "~/lib/session.server"
 
 const schema = z
 	.object({
@@ -63,7 +64,16 @@ export async function action({ request }: ActionFunctionArgs) {
 			email,
 			password,
 		})
-		return redirect("/login")
+
+		const { getSession, commitSession } = getSessionStorage()
+		const session = await getSession(request.headers.get("Cookie"))
+		session.flash("message", "Registration successful")
+
+		return redirect("/login", {
+			headers: {
+				"Set-Cookie": await commitSession(session),
+			},
+		})
 	} catch (error) {
 		if (error instanceof Error) {
 			return json({ submission, message: error.message })

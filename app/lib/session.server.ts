@@ -1,12 +1,22 @@
 import { createCookieSessionStorage } from "@remix-run/cloudflare"
 import { contextHasSecret } from "./helpers/context-type"
+import { type UserSession } from "./auth.server"
+
+type SessionData = {
+	user: UserSession
+	strategy: string
+}
+
+type SessionFlashData = {
+	message: string
+}
 
 function initializeCookieSessionStorage(context: Record<string, unknown>) {
 	if (!contextHasSecret(context)) {
 		throw new Error("No SECRET_KEY in context")
 	}
 
-	return createCookieSessionStorage({
+	return createCookieSessionStorage<SessionData, SessionFlashData>({
 		cookie: {
 			name: "__session",
 			sameSite: "lax",
