@@ -1,11 +1,11 @@
 import { createCookieSessionStorage } from "@remix-run/cloudflare"
 
-const contextWithSecret = (context: Record<string, unknown>): context is { SECRET_KEY: string } => {
+const contextHasSecret = (context: Record<string, unknown>): context is { SECRET_KEY: string } => {
 	return "SECRET_KEY" in context
 }
 
 function initializeCookieSessionStorage(context: Record<string, unknown>) {
-	if (!contextWithSecret(context)) {
+	if (!contextHasSecret(context)) {
 		throw new Error("No SECRET_KEY in context")
 	}
 

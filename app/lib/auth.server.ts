@@ -19,13 +19,13 @@ class Auth {
 	private secretKey
 
 	constructor(context: Record<string, unknown>) {
-		const isValidContext = (
+		const contextHasSecret = (
 			context: Record<string, unknown>,
 		): context is { SECRET_KEY: string } => {
 			return "SECRET_KEY" in context
 		}
 
-		if (!isValidContext(context)) {
+		if (!contextHasSecret(context)) {
 			throw new Error("No SECRET_KEY in context")
 		}
 
