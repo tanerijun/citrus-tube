@@ -5,10 +5,13 @@ import { user } from "./schema.server"
 import type { NewUser, User } from "./schema.server"
 import { getDb } from "./db.server"
 import { hash, verify } from "./pbkdf2.server"
-import { contextHasSecret } from "./helpers/context-type"
 import { createCookieSessionStorage } from "@remix-run/cloudflare"
 
-export type UserSession = Pick<User, "id" | "username">
+type UserSession = Pick<User, "id" | "username">
+
+function contextHasSecret(context: Record<string, unknown>): context is { SECRET_KEY: string } {
+	return "SECRET_KEY" in context
+}
 
 class Auth {
 	public authenticator
