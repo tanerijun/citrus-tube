@@ -1,5 +1,10 @@
-import { type LoaderFunctionArgs, json, redirect } from "@remix-run/cloudflare"
-import { type MetaFunction, Outlet, useLoaderData, Link } from "@remix-run/react"
+import {
+	type LoaderFunctionArgs,
+	type ActionFunctionArgs,
+	json,
+	redirect,
+} from "@remix-run/cloudflare"
+import { type MetaFunction, Outlet, useLoaderData, Link, Form } from "@remix-run/react"
 import { Cloudinary } from "@cloudinary/url-gen"
 import { CitrusIcon } from "~/components/icons/citrus"
 import { SearchIcon } from "~/components/icons/search"
@@ -8,6 +13,13 @@ import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { getAuth } from "~/lib/auth.server"
 import { getUserData } from "~/lib/services/user.server"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu"
 
 export const meta: MetaFunction = () => {
 	return [
@@ -33,6 +45,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	}
 
 	return json({ user: userData })
+}
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+	await getAuth().authenticator.logout(request, { redirectTo: "/" })
 }
 
 function Logo() {
@@ -74,7 +90,7 @@ function AuthLink() {
 	)
 }
 
-function UserInfo() {
+function Menu() {
 	const { user } = useLoaderData<typeof loader>()
 
 	if (!user) {
@@ -89,12 +105,50 @@ function UserInfo() {
 	}
 
 	return (
-		<Button className="overflow-hidden rounded-full" variant="ghost" size="icon">
-			<Avatar>
-				<AvatarImage src={profileImageUrl ?? undefined} alt={user.username} />
-				<AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
-			</Avatar>
-		</Button>
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button className="overflow-hidden rounded-full" variant="ghost" size="icon">
+					<Avatar>
+						<AvatarImage src={profileImageUrl ?? undefined} alt={user.username} />
+						<AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
+					</Avatar>
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end">
+				<div className="flex items-center gap-4 px-4 py-2">
+					<Avatar>
+						<AvatarImage src={profileImageUrl ?? undefined} alt={user.username} />
+						<AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
+					</Avatar>
+					<p>{"@" + user.username}</p>
+				</div>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem>
+					<p>Profile</p>
+				</DropdownMenuItem>
+				<DropdownMenuItem>
+					<p>Studio</p>
+				</DropdownMenuItem>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem>
+					<p>Help</p>
+				</DropdownMenuItem>
+				<DropdownMenuItem>
+					<p>Feedback</p>
+				</DropdownMenuItem>
+				<DropdownMenuItem>
+					<p>Bug report</p>
+				</DropdownMenuItem>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem asChild>
+					<Form method="POST">
+						<Button type="submit" className="w-full" variant="ghost" size="sm">
+							Log out
+						</Button>
+					</Form>
+				</DropdownMenuItem>
+			</DropdownMenuContent>
+		</DropdownMenu>
 	)
 }
 
@@ -103,7 +157,7 @@ function Navbar() {
 		<header className="mx-12 flex items-center justify-between py-4">
 			<Logo />
 			<Searchbar />
-			<UserInfo />
+			<Menu />
 		</header>
 	)
 }
