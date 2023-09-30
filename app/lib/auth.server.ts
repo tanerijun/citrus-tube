@@ -5,12 +5,10 @@ import { user } from "./schema.server"
 import type { NewUser, User } from "./schema.server"
 import { getDb } from "./db.server"
 import { hash, verify } from "./pbkdf2.server"
-import { getSessionStorage } from "./session.server"
 import { contextHasSecret } from "./helpers/context-type"
+import { createCookieSessionStorage } from "@remix-run/cloudflare"
 
 export type UserSession = Pick<User, "id" | "username">
-
-const EMAIL_PASSWORD_STRATEGY = "email-password-strategy"
 
 class Auth {
 	public authenticator
@@ -26,12 +24,21 @@ class Auth {
 
 		this.secretKey = context.SECRET_KEY
 
-		this.sessionStorage = getSessionStorage()
+		this.sessionStorage = createCookieSessionStorage({
+			cookie: {
+				name: "__session",
+				sameSite: "lax",
+				path: "/",
+				httpOnly: true,
+				secrets: [context.SECRET_KEY],
+				secure: process.env.NODE_ENV === "production",
+			},
+		})
 
 		this.db = getDb()
 
 		this.strategy = {
-			email: EMAIL_PASSWORD_STRATEGY,
+			email: "email-password-strategy",
 		}
 
 		this.authenticator = new Authenticator<UserSession>(this.sessionStorage)
@@ -49,7 +56,7 @@ class Auth {
 
 				return { id: account.id, username: account.username }
 			}),
-			EMAIL_PASSWORD_STRATEGY,
+			this.strategy.email,
 		)
 	}
 

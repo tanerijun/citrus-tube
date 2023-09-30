@@ -4,9 +4,7 @@ import { Form, useLoaderData } from "@remix-run/react"
 import { getAuth } from "~/lib/auth.server"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-	const user = await getAuth().authenticator.isAuthenticated(request, {
-		failureRedirect: "/login",
-	})
+	const user = await getAuth().authenticator.isAuthenticated(request)
 
 	return json(user)
 }
@@ -20,7 +18,7 @@ export default function Index() {
 
 	return (
 		<div>
-			<h1 className="text-red-500 underline">Hello {user.username}!</h1>
+			<h1 className="text-red-500 underline">Hello {user ? user.username : "Anonymous"}!</h1>
 			<Form method="post">
 				<button type="submit">Log out</button>
 			</Form>
