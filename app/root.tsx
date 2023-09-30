@@ -12,8 +12,8 @@ import {
 import globalStyles from "~/styles/global.css"
 import { Toaster } from "~/components/ui/toaster"
 import { toast } from "~/components/ui/use-toast"
-import { getSessionStorage } from "~/lib/session.server"
 import { useEffect } from "react"
+import { commitSession, getSession } from "./lib/session.server"
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -21,7 +21,6 @@ export const links: LinksFunction = () => [
 ]
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-	const { getSession, commitSession } = getSessionStorage()
 	const session = await getSession(request.headers.get("Cookie"))
 	const message = session.get("message")
 
