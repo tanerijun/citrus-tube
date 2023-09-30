@@ -2,6 +2,7 @@ import { type LoaderFunctionArgs, json, redirect } from "@remix-run/cloudflare"
 import { type MetaFunction, Outlet, useLoaderData, Link } from "@remix-run/react"
 import { CitrusIcon } from "~/components/icons/citrus"
 import { SearchIcon } from "~/components/icons/search"
+import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { getAuth } from "~/lib/auth.server"
@@ -79,7 +80,14 @@ function UserInfo() {
 		return <AuthLink />
 	}
 
-	return <p>{user.profileImageUrl || "OK"}</p>
+	return (
+		<Button className="overflow-hidden rounded-full" variant="ghost" size="icon">
+			<Avatar>
+				<AvatarImage src={user.profileImageUrl ?? undefined} />
+				<AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
+			</Avatar>
+		</Button>
+	)
 }
 
 function Navbar() {
