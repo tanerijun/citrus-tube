@@ -20,11 +20,14 @@ export const links: LinksFunction = () => [
 	{ rel: "stylesheet", href: globalStyles },
 ]
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	const session = await getSession(request.headers.get("Cookie"))
 	const message = session.get("message")
 
-	return json({ message }, { headers: { "Set-Cookie": await commitSession(session) } })
+	return json(
+		{ message, ENV: { CLOUDINARY_CLOUD_NAME: context.CLOUDINARY_CLOUD_NAME } },
+		{ headers: { "Set-Cookie": await commitSession(session) } },
+	)
 }
 
 export default function App() {
@@ -48,6 +51,9 @@ export default function App() {
 				<Outlet />
 				<Toaster />
 				<ScrollRestoration />
+				<script
+					dangerouslySetInnerHTML={{ __html: `window.ENV = ${JSON.stringify(loaderData.ENV)}` }}
+				/>
 				<Scripts />
 				<LiveReload />
 			</body>

@@ -14,6 +14,7 @@
     "migrate:remote": "wrangler d1 migrations apply citrus-tube"
   },
   "dependencies": {
+    "@cloudinary/url-gen": "^1.11.2",
     "@conform-to/react": "^0.9.0",
     "@conform-to/zod": "^0.9.0",
     "@formkit/auto-animate": "^0.8.0",

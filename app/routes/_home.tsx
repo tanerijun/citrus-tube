@@ -1,5 +1,6 @@
 import { type LoaderFunctionArgs, json, redirect } from "@remix-run/cloudflare"
 import { type MetaFunction, Outlet, useLoaderData, Link } from "@remix-run/react"
+import { Cloudinary } from "@cloudinary/url-gen"
 import { CitrusIcon } from "~/components/icons/citrus"
 import { SearchIcon } from "~/components/icons/search"
 import { Avatar, AvatarImage, AvatarFallback } from "~/components/ui/avatar"
@@ -80,10 +81,17 @@ function UserInfo() {
 		return <AuthLink />
 	}
 
+	let { profileImageUrl } = user
+
+	if (profileImageUrl && typeof window !== "undefined" && window.ENV?.CLOUDINARY_CLOUD_NAME) {
+		const cld = new Cloudinary({ cloud: { cloudName: window.ENV.CLOUDINARY_CLOUD_NAME } })
+		profileImageUrl = cld.image(profileImageUrl).toURL()
+	}
+
 	return (
 		<Button className="overflow-hidden rounded-full" variant="ghost" size="icon">
 			<Avatar>
-				<AvatarImage src={user.profileImageUrl ?? undefined} />
+				<AvatarImage src={profileImageUrl ?? undefined} alt={user.username} />
 				<AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
 			</Avatar>
 		</Button>
