@@ -21,11 +21,11 @@ export const links: LinksFunction = () => [
 ]
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-	const { getSession } = getSessionStorage()
+	const { getSession, commitSession } = getSessionStorage()
 	const session = await getSession(request.headers.get("Cookie"))
 	const message = session.get("message")
 
-	return json({ message })
+	return json({ message }, { headers: { "Set-Cookie": await commitSession(session) } })
 }
 
 export default function App() {
