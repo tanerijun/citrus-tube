@@ -142,9 +142,9 @@ function Menu() {
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
 					<Form method="POST">
-						<Button type="submit" className="w-full" variant="ghost" size="sm">
+						<button type="submit" className="text-destructive w-full text-left">
 							Log out
-						</Button>
+						</button>
 					</Form>
 				</DropdownMenuItem>
 			</DropdownMenuContent>
