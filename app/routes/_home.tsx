@@ -1,9 +1,4 @@
-import {
-	type LoaderFunctionArgs,
-	type ActionFunctionArgs,
-	json,
-	redirect,
-} from "@remix-run/cloudflare"
+import { type LoaderFunctionArgs, json, redirect } from "@remix-run/cloudflare"
 import { type MetaFunction, Outlet, useLoaderData, Link, Form } from "@remix-run/react"
 import { Cloudinary } from "@cloudinary/url-gen"
 import { CitrusIcon } from "~/components/icons/citrus"
@@ -51,10 +46,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	}
 
 	return json({ user: userData })
-}
-
-export const action = async ({ request }: ActionFunctionArgs) => {
-	await getAuth().authenticator.logout(request, { redirectTo: "/" })
 }
 
 function Logo() {
@@ -152,7 +143,7 @@ function Menu() {
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
-					<Form method="POST">
+					<Form method="POST" action="/logout">
 						<button
 							type="submit"
 							className="text-destructive flex w-full items-center justify-start"
