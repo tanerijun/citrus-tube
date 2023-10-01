@@ -121,7 +121,7 @@ function Menu() {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
-				<div className="flex items-center gap-4 px-4 py-2">
+				<div className="flex items-center gap-4 px-3 py-2">
 					<Avatar>
 						<AvatarImage src={profileImageUrl ?? undefined} alt={user.username} />
 						<AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
