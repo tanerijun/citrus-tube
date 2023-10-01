@@ -20,6 +20,12 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
+import { UserSquareIcon } from "~/components/icons/user-square"
+import { LayoutDashboardIcon } from "~/components/icons/layout-dashboard"
+import { HelpCircleIcon } from "~/components/icons/help-circle"
+import { AlertCircleIcon } from "~/components/icons/alert-circle"
+import { BugIcon } from "~/components/icons/bug"
+import { LogoutIcon } from "~/components/icons/logout"
 
 export const meta: MetaFunction = () => {
 	return [
@@ -120,29 +126,38 @@ function Menu() {
 						<AvatarImage src={profileImageUrl ?? undefined} alt={user.username} />
 						<AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
 					</Avatar>
-					<p>{"@" + user.username}</p>
+					<span>{"@" + user.username}</span>
 				</div>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>
-					<p>Profile</p>
+					<UserSquareIcon className="mr-2" />
+					<span>Profile</span>
 				</DropdownMenuItem>
 				<DropdownMenuItem>
-					<p>Studio</p>
+					<LayoutDashboardIcon className="mr-2" />
+					<span>Studio</span>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>
-					<p>Help</p>
+					<HelpCircleIcon className="mr-2" />
+					<span>Help</span>
 				</DropdownMenuItem>
 				<DropdownMenuItem>
-					<p>Feedback</p>
+					<AlertCircleIcon className="mr-2" />
+					<span>Feedback</span>
 				</DropdownMenuItem>
 				<DropdownMenuItem>
-					<p>Bug report</p>
+					<BugIcon className="mr-2" />
+					<span>Bug report</span>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
 					<Form method="POST">
-						<button type="submit" className="text-destructive w-full text-left">
+						<button
+							type="submit"
+							className="text-destructive flex w-full items-center justify-start"
+						>
+							<LogoutIcon className="mr-2" />
 							Log out
 						</button>
 					</Form>
