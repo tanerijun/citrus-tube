@@ -4,17 +4,18 @@ import {
 	redirect,
 	json,
 } from "@remix-run/cloudflare"
-import { z } from "zod"
 import { Form, Link, useActionData } from "@remix-run/react"
+import { useId } from "react"
+import { z } from "zod"
+import { parse } from "@conform-to/zod"
+import { conform, useForm } from "@conform-to/react"
 import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
-import { getAuth } from "~/lib/auth.server"
-import { parse } from "@conform-to/zod"
-import { useId } from "react"
-import { conform, useForm } from "@conform-to/react"
 import { Alert, AlertDescription } from "~/components/ui/alert"
 import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
+import { getAuth } from "~/lib/auth.server"
 import { commitSession, getSession } from "~/lib/session.server"
 
 const schema = z
@@ -96,62 +97,63 @@ export default function Register() {
 	})
 
 	return (
-		<main className="mx-10 flex h-screen flex-col items-center justify-center gap-6">
-			<h2 className="text-2xl">Welcome to Citrus!</h2>
-			<Form
-				method="post"
-				className="border-input flex w-full flex-col gap-6 rounded-md border p-12 md:w-[32rem]"
-				{...form.props}
-			>
-				{data?.message && (
-					<Alert variant="destructive" className="text-center">
-						<AlertDescription>{data.message}</AlertDescription>
-					</Alert>
-				)}
-				<AutoAnimatedContainer className="flex flex-col gap-2">
-					<Label htmlFor={fields.username.id}>Username</Label>
-					<Input {...conform.input(fields.username, { type: "text" })} />
-					{fields.username.error && (
-						<p id={fields.username.errorId} className="text-destructive text-xs">
-							{fields.username.error}
-						</p>
+		<Card className="min-w-full sm:min-w-[26rem]">
+			<CardHeader>
+				<CardTitle>Welcome to Citrus!</CardTitle>
+				<CardDescription>Register for an account.</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<Form method="post" className="flex w-full flex-col gap-6" {...form.props}>
+					{data?.message && (
+						<Alert variant="destructive" className="text-center">
+							<AlertDescription>{data.message}</AlertDescription>
+						</Alert>
 					)}
-				</AutoAnimatedContainer>
-				<AutoAnimatedContainer className="flex flex-col gap-2">
-					<Label htmlFor={fields.email.id}>Email</Label>
-					<Input {...conform.input(fields.email, { type: "email" })} />
-					{fields.email.error && (
-						<p id={fields.email.errorId} className="text-destructive text-xs">
-							{fields.email.error}
-						</p>
-					)}
-				</AutoAnimatedContainer>
-				<AutoAnimatedContainer className="flex flex-col gap-2">
-					<Label htmlFor={fields.password.id}>Password</Label>
-					<Input {...conform.input(fields.password, { type: "password" })} />
-					{fields.password.error && (
-						<p id={fields.password.errorId} className="text-destructive text-xs">
-							{fields.password.error}
-						</p>
-					)}
-				</AutoAnimatedContainer>
-				<AutoAnimatedContainer className="flex flex-col gap-2">
-					<Label htmlFor={fields.confirmPassword.id}>Confirm password</Label>
-					<Input {...conform.input(fields.confirmPassword, { type: "password" })} />
-					{fields.confirmPassword.error && (
-						<p id={fields.confirmPassword.errorId} className="text-destructive text-xs">
-							{fields.confirmPassword.error}
-						</p>
-					)}
-				</AutoAnimatedContainer>
-				<Button type="submit">Register</Button>
-				<small>
-					Already have an account?{" "}
-					<Link to="/login" className="text-primary hover:underline">
-						Login
-					</Link>
-				</small>
-			</Form>
-		</main>
+					<AutoAnimatedContainer className="flex flex-col gap-2">
+						<Label htmlFor={fields.username.id}>Username</Label>
+						<Input {...conform.input(fields.username, { type: "text" })} />
+						{fields.username.error && (
+							<p id={fields.username.errorId} className="text-destructive text-xs">
+								{fields.username.error}
+							</p>
+						)}
+					</AutoAnimatedContainer>
+					<AutoAnimatedContainer className="flex flex-col gap-2">
+						<Label htmlFor={fields.email.id}>Email</Label>
+						<Input {...conform.input(fields.email, { type: "email" })} />
+						{fields.email.error && (
+							<p id={fields.email.errorId} className="text-destructive text-xs">
+								{fields.email.error}
+							</p>
+						)}
+					</AutoAnimatedContainer>
+					<AutoAnimatedContainer className="flex flex-col gap-2">
+						<Label htmlFor={fields.password.id}>Password</Label>
+						<Input {...conform.input(fields.password, { type: "password" })} />
+						{fields.password.error && (
+							<p id={fields.password.errorId} className="text-destructive text-xs">
+								{fields.password.error}
+							</p>
+						)}
+					</AutoAnimatedContainer>
+					<AutoAnimatedContainer className="flex flex-col gap-2">
+						<Label htmlFor={fields.confirmPassword.id}>Confirm password</Label>
+						<Input {...conform.input(fields.confirmPassword, { type: "password" })} />
+						{fields.confirmPassword.error && (
+							<p id={fields.confirmPassword.errorId} className="text-destructive text-xs">
+								{fields.confirmPassword.error}
+							</p>
+						)}
+					</AutoAnimatedContainer>
+					<Button type="submit">Register</Button>
+					<small>
+						Already have an account?{" "}
+						<Link to="/login" className="text-primary hover:underline">
+							Login
+						</Link>
+					</small>
+				</Form>
+			</CardContent>
+		</Card>
 	)
 }
