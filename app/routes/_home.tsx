@@ -52,8 +52,8 @@ function Logo() {
 	return (
 		<Link to="/">
 			<div className="flex items-center justify-center gap-0">
-				<CitrusIcon className="text-primary h-10 w-10" />
-				<h2 className="text-primary text-4xl font-bold">Citrus</h2>
+				<CitrusIcon className="text-primary h-8 w-8" />
+				<h2 className="text-primary text-3xl font-bold">Citrus</h2>
 			</div>
 		</Link>
 	)
