@@ -62,7 +62,7 @@ function Logo() {
 function Searchbar() {
 	return (
 		<div className="relative w-full max-w-lg">
-			<Input className="pr-14" type="text" placeholder="Search videos" />
+			<Input className="hidden pr-14 md:block" type="text" placeholder="Search videos" />
 			<Button
 				className="absolute right-0 top-1/2 -translate-y-1/2"
 				variant="ghost"
@@ -77,7 +77,7 @@ function Searchbar() {
 function AuthLink() {
 	return (
 		<nav className="flex gap-4">
-			<Button asChild variant="ghost">
+			<Button asChild variant="ghost" className="hidden md:block">
 				<Link to="/register">Register</Link>
 			</Button>
 			<Button asChild>
@@ -160,10 +160,13 @@ function Menu() {
 
 function Navbar() {
 	return (
-		<header className="mx-12 flex items-center justify-between py-4">
+		<header className="mx-6 flex items-center gap-4 py-4 md:mx-12">
 			<Logo />
-			<Searchbar />
-			<Menu />
+			<div className="flex flex-1 justify-end gap-1 md:justify-between md:gap-4">
+				<div className="hidden md:block" />
+				<Searchbar />
+				<Menu />
+			</div>
 		</header>
 	)
 }
