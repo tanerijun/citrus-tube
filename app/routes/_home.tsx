@@ -21,6 +21,14 @@ import { HelpCircleIcon } from "~/components/icons/help-circle"
 import { AlertCircleIcon } from "~/components/icons/alert-circle"
 import { BugIcon } from "~/components/icons/bug"
 import { LogoutIcon } from "~/components/icons/logout"
+import { HamburgerIcon } from "~/components/icons/hamburger"
+import { HomeIcon } from "~/components/icons/home"
+import { ThumbsUpIcon } from "~/components/icons/thumbs-up"
+import { VideoIcon } from "~/components/icons/video"
+import { PlaylistIcon } from "~/components/icons/playlist"
+import { HistoryIcon } from "~/components/icons/history"
+import { UsersIcon } from "~/components/icons/users"
+import { SettingsIcon } from "~/components/icons/settings"
 
 export const meta: MetaFunction = () => {
 	return [
@@ -158,10 +166,56 @@ function Menu() {
 	)
 }
 
+const sidebarItems = [
+	{ name: "Home", path: "/", icon: <HomeIcon /> },
+	{ name: "Liked videos", path: "/liked", icon: <ThumbsUpIcon /> },
+	{ name: "Your videos", path: "/your-videos", icon: <VideoIcon /> },
+	{ name: "Playlist", path: "/playlist", icon: <PlaylistIcon /> },
+	{ name: "History", path: "/history", icon: <HistoryIcon /> },
+	{ name: "Following", path: "/following", icon: <UsersIcon /> },
+]
+
+const sidebarFooterItems = [
+	{ name: "Settings", path: "/settings", icon: <SettingsIcon /> },
+	{ name: "Help", path: "/help", icon: <HelpCircleIcon /> },
+]
+
+function Sidebar() {
+	return (
+		<aside className="flex w-64 flex-col justify-between border border-red-300 p-4">
+			<div className="flex flex-col gap-2">
+				{sidebarItems.map((item) => (
+					<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
+						<Link to={item.path}>
+							<span className="mr-3 text-lg">{item.icon}</span>
+							<span>{item.name}</span>
+						</Link>
+					</Button>
+				))}
+			</div>
+			<div className="flex flex-col gap-2">
+				{sidebarFooterItems.map((item) => (
+					<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
+						<Link to={item.path}>
+							<span className="mr-3 text-lg">{item.icon}</span>
+							<span>{item.name}</span>
+						</Link>
+					</Button>
+				))}
+			</div>
+		</aside>
+	)
+}
+
 function Navbar() {
 	return (
 		<header className="mx-6 flex items-center gap-4 py-4 md:mx-12">
-			<Logo />
+			<div className="flex gap-1 md:gap-4">
+				<Button variant="ghost">
+					<HamburgerIcon className="h-5 w-5" />
+				</Button>
+				<Logo />
+			</div>
 			<div className="flex flex-1 justify-end gap-1 md:justify-between md:gap-4">
 				<div className="hidden md:block" />
 				<Searchbar />
@@ -173,9 +227,14 @@ function Navbar() {
 
 export default function HomeLayout() {
 	return (
-		<main>
+		<div className="flex min-h-screen flex-col">
 			<Navbar />
-			<Outlet />
-		</main>
+			<div className="flex flex-1">
+				<Sidebar />
+				<main>
+					<Outlet />
+				</main>
+			</div>
+		</div>
 	)
 }
