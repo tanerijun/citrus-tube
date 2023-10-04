@@ -33,6 +33,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	return json({ user: { username, profileImageUrl } })
 }
 
+export function useHomeLayoutLoaderData() {
+	return useLoaderData<typeof loader>()
+}
+
 export default function HomeLayout() {
 	const { user } = useLoaderData<typeof loader>()
 

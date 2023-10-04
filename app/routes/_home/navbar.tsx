@@ -19,8 +19,7 @@ import { AlertCircleIcon } from "~/components/icons/alert-circle"
 import { BugIcon } from "~/components/icons/bug"
 import { LogoutIcon } from "~/components/icons/logout"
 import { Cloudinary } from "@cloudinary/url-gen/index"
-
-type UserData = { username: string; profileImageUrl: string | null }
+import { useHomeLayoutLoaderData } from "./route"
 
 function Logo() {
 	return (
@@ -61,8 +60,12 @@ function AuthLink() {
 	)
 }
 
-function Menu({ userData }: { userData: UserData }) {
-	let { username, profileImageUrl } = userData
+function Menu() {
+	const { user } = useHomeLayoutLoaderData()
+
+	if (!user) throw new Error("User data not found")
+
+	let { username, profileImageUrl } = user
 
 	if (profileImageUrl && typeof window !== "undefined" && window.ENV?.CLOUDINARY_CLOUD_NAME) {
 		const cld = new Cloudinary({ cloud: { cloudName: window.ENV.CLOUDINARY_CLOUD_NAME } })
@@ -126,7 +129,9 @@ function Menu({ userData }: { userData: UserData }) {
 	)
 }
 
-export function Navbar({ userData }: { userData: UserData | null }) {
+export function Navbar() {
+	const { user } = useHomeLayoutLoaderData()
+
 	return (
 		<header className="mx-6 flex items-center gap-4 py-4">
 			<div className="flex gap-1 md:gap-4">
@@ -138,7 +143,7 @@ export function Navbar({ userData }: { userData: UserData | null }) {
 			<div className="flex flex-1 justify-end gap-1 md:justify-between md:gap-4">
 				<div className="hidden md:block" />
 				<Searchbar />
-				{userData ? <Menu userData={userData} /> : <AuthLink />}
+				{user ? <Menu /> : <AuthLink />}
 			</div>
 		</header>
 	)
