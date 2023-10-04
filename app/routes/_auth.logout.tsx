@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, type ActionFunctionArgs } from "@remix-run/cloudflare"
+import { type ActionFunctionArgs, type LoaderFunctionArgs } from "@remix-run/cloudflare"
 import { getAuth } from "~/lib/auth.server"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {

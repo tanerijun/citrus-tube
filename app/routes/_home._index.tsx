@@ -1,5 +1,5 @@
-import { json } from "@remix-run/cloudflare"
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/cloudflare"
+import { json } from "@remix-run/cloudflare"
 import { Form, useLoaderData } from "@remix-run/react"
 import { getAuth } from "~/lib/auth.server"
 

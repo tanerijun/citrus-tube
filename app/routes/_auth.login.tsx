@@ -1,17 +1,17 @@
-import { type LoaderFunctionArgs, type ActionFunctionArgs, json } from "@remix-run/cloudflare"
-import { Form, Link, useActionData } from "@remix-run/react"
-import { useId } from "react"
-import { z } from "zod"
 import { conform, useForm } from "@conform-to/react"
 import { parse } from "@conform-to/zod"
+import { json, type ActionFunctionArgs, type LoaderFunctionArgs } from "@remix-run/cloudflare"
+import { Form, Link, useActionData } from "@remix-run/react"
+import { useId } from "react"
 import { AuthorizationError } from "remix-auth"
+import { z } from "zod"
 import { Alert, AlertDescription } from "~/components/ui/alert"
+import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
 import { Button } from "~/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { getAuth } from "~/lib/auth.server"
-import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 
 const schema = z.object({
 	email: z.string({ required_error: "Email is required" }).email("Email is invalid"),

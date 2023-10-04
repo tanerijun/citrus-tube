@@ -1,5 +1,4 @@
 import { Link } from "@remix-run/react"
-import { Button } from "~/components/ui/button"
 import { HelpCircleIcon } from "~/components/icons/help-circle"
 import { HistoryIcon } from "~/components/icons/history"
 import { HomeIcon } from "~/components/icons/home"
@@ -8,6 +7,7 @@ import { SettingsIcon } from "~/components/icons/settings"
 import { ThumbsUpIcon } from "~/components/icons/thumbs-up"
 import { UsersIcon } from "~/components/icons/users"
 import { VideoIcon } from "~/components/icons/video"
+import { Button } from "~/components/ui/button"
 
 const sidebarItems = [
 	{ name: "Home", path: "/", icon: <HomeIcon /> },

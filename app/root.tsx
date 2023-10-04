@@ -9,11 +9,11 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from "@remix-run/react"
-import globalStyles from "~/styles/global.css"
+import { useEffect } from "react"
 import { Toaster } from "~/components/ui/toaster"
 import { toast } from "~/components/ui/use-toast"
-import { useEffect } from "react"
-import { commitSession, getSession } from "./lib/session.server"
+import { commitSession, getSession } from "~/lib/session.server"
+import globalStyles from "~/styles/global.css"
 
 export const links: LinksFunction = () => [
 	...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
