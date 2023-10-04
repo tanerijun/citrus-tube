@@ -38,11 +38,9 @@ export function useHomeLayoutLoaderData() {
 }
 
 export default function HomeLayout() {
-	const { user } = useLoaderData<typeof loader>()
-
 	return (
 		<div className="flex min-h-screen flex-col">
-			<Navbar userData={user} />
+			<Navbar />
 			<div className="flex flex-1">
 				<Sidebar />
 				<main>
