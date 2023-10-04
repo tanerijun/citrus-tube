@@ -1,23 +1,23 @@
 import { Form, Link } from "@remix-run/react"
-import { HamburgerIcon } from "./icons/hamburger"
-import { Button } from "./ui/button"
-import { CitrusIcon } from "./icons/citrus"
-import { Input } from "./ui/input"
-import { SearchIcon } from "./icons/search"
+import { HamburgerIcon } from "~/components/icons/hamburger"
+import { Button } from "~/components/ui/button"
+import { CitrusIcon } from "~/components/icons/citrus"
+import { Input } from "~/components/ui/input"
+import { SearchIcon } from "~/components/icons/search"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "./ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { UserSquareIcon } from "./icons/user-square"
-import { LayoutDashboardIcon } from "./icons/layout-dashboard"
-import { HelpCircleIcon } from "./icons/help-circle"
-import { AlertCircleIcon } from "./icons/alert-circle"
-import { BugIcon } from "./icons/bug"
-import { LogoutIcon } from "./icons/logout"
+} from "~/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
+import { UserSquareIcon } from "~/components/icons/user-square"
+import { LayoutDashboardIcon } from "~/components/icons/layout-dashboard"
+import { HelpCircleIcon } from "~/components/icons/help-circle"
+import { AlertCircleIcon } from "~/components/icons/alert-circle"
+import { BugIcon } from "~/components/icons/bug"
+import { LogoutIcon } from "~/components/icons/logout"
 import { Cloudinary } from "@cloudinary/url-gen/index"
 
 type UserData = { username: string; profileImageUrl: string | null }
