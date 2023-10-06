@@ -1,5 +1,5 @@
 import { json, redirect, type LoaderFunctionArgs } from "@remix-run/cloudflare"
-import { Outlet, useLoaderData, type MetaFunction } from "@remix-run/react"
+import { Outlet, type MetaFunction } from "@remix-run/react"
 import { getAuth } from "~/lib/auth.server"
 import { getUserData } from "~/lib/services/user.server"
 import { Navbar } from "~/routes/_home/navbar"
@@ -31,10 +31,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const { username, profileImageUrl } = userData
 
 	return json({ user: { username, profileImageUrl } })
-}
-
-export function useHomeLayoutLoaderData() {
-	return useLoaderData<typeof loader>()
 }
 
 export default function HomeLayout() {

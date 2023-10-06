@@ -1,5 +1,5 @@
 import { Cloudinary } from "@cloudinary/url-gen/index"
-import { Form, Link } from "@remix-run/react"
+import { Form, Link, useLoaderData } from "@remix-run/react"
 import { AlertCircleIcon } from "~/components/icons/alert-circle"
 import { BugIcon } from "~/components/icons/bug"
 import { CitrusIcon } from "~/components/icons/citrus"
@@ -18,7 +18,7 @@ import {
 	DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
 import { Input } from "~/components/ui/input"
-import { useHomeLayoutLoaderData } from "./route"
+import { type loader } from "./route"
 
 function Logo() {
 	return (
@@ -60,7 +60,7 @@ function AuthLink() {
 }
 
 function Menu() {
-	const { user } = useHomeLayoutLoaderData()
+	const { user } = useLoaderData<typeof loader>()
 
 	if (!user) throw new Error("User data not found")
 
@@ -129,7 +129,7 @@ function Menu() {
 }
 
 export function Navbar({ children: slotBeforeLogo }: { children: React.ReactNode }) {
-	const { user } = useHomeLayoutLoaderData()
+	const { user } = useLoaderData<typeof loader>()
 
 	return (
 		<header className="mx-6 flex items-center gap-4 py-4">
