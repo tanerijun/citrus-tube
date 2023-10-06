@@ -9,7 +9,9 @@ import { SettingsIcon } from "~/components/icons/settings"
 import { ThumbsUpIcon } from "~/components/icons/thumbs-up"
 import { UsersIcon } from "~/components/icons/users"
 import { VideoIcon } from "~/components/icons/video"
+import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
 import { Button } from "~/components/ui/button"
+import { cn } from "~/lib/utils"
 
 const sidebarItems = [
 	{ name: "Home", path: "/", icon: <HomeIcon /> },
@@ -61,53 +63,33 @@ export function SidebarTrigger() {
 	)
 }
 
+function SidebarItems({ items, isExpanded }: { items: typeof sidebarItems; isExpanded: boolean }) {
+	return (
+		<div className="flex flex-col gap-2">
+			{items.map((item) => (
+				<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
+					<AutoAnimatedContainer asChild>
+						<Link to={item.path}>
+							<span className={cn("text-lg", isExpanded && "mr-3")}>{item.icon}</span>
+							{isExpanded && <span className="overflow-x-hidden">{item.name}</span>}
+						</Link>
+					</AutoAnimatedContainer>
+				</Button>
+			))}
+		</div>
+	)
+}
+
 // TODO: Change link color when it's active
 export function Sidebar() {
 	const [isOpen] = useSidebar()
 
-	return isOpen ? (
-		<aside className="flex w-64 flex-col justify-between border border-red-300 p-4">
-			<div className="flex flex-col gap-2">
-				{sidebarItems.map((item) => (
-					<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
-						<Link to={item.path}>
-							<span className="mr-3 text-lg">{item.icon}</span>
-							<span>{item.name}</span>
-						</Link>
-					</Button>
-				))}
-			</div>
-			<div className="flex flex-col gap-2">
-				{sidebarFooterItems.map((item) => (
-					<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
-						<Link to={item.path}>
-							<span className="mr-3 text-lg">{item.icon}</span>
-							<span>{item.name}</span>
-						</Link>
-					</Button>
-				))}
-			</div>
-		</aside>
-	) : (
-		<aside className="flex flex-col justify-between border border-red-300 p-4">
-			<div className="flex flex-col gap-2">
-				{sidebarItems.map((item) => (
-					<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
-						<Link to={item.path}>
-							<span className="text-lg">{item.icon}</span>
-						</Link>
-					</Button>
-				))}
-			</div>
-			<div className="flex flex-col gap-2">
-				{sidebarFooterItems.map((item) => (
-					<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
-						<Link to={item.path}>
-							<span className="text-lg">{item.icon}</span>
-						</Link>
-					</Button>
-				))}
-			</div>
+	return (
+		<aside
+			className={cn("flex flex-col justify-between border border-red-300 p-4", isOpen && "w-64")}
+		>
+			<SidebarItems items={sidebarItems} isExpanded={isOpen} />
+			<SidebarItems items={sidebarFooterItems} isExpanded={isOpen} />
 		</aside>
 	)
 }
