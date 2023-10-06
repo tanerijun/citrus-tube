@@ -1,4 +1,6 @@
 import { Link } from "@remix-run/react"
+import { createContext, useContext, useState } from "react"
+import { HamburgerIcon } from "~/components/icons/hamburger"
 import { HelpCircleIcon } from "~/components/icons/help-circle"
 import { HistoryIcon } from "~/components/icons/history"
 import { HomeIcon } from "~/components/icons/home"
@@ -23,8 +25,46 @@ const sidebarFooterItems = [
 	{ name: "Help", path: "/help", icon: <HelpCircleIcon /> },
 ]
 
+const SidebarContext = createContext<
+	[boolean, React.Dispatch<React.SetStateAction<boolean>>] | null
+>(null)
+
+export function SidebarProvider({ children }: { children: React.ReactNode }) {
+	const [isOpen, setIsOpen] = useState(true)
+
+	return <SidebarContext.Provider value={[isOpen, setIsOpen]}>{children}</SidebarContext.Provider>
+}
+
+function useSidebar() {
+	const contextValue = useContext(SidebarContext)
+
+	if (contextValue === null) {
+		throw new Error(
+			"Could not find SidebarContext, please ensure the component is wrapped with it's context provider",
+		)
+	}
+
+	return contextValue
+}
+
+export function SidebarTrigger() {
+	const [isOpen, setIsOpen] = useSidebar()
+
+	const toggleSidebar = () => {
+		setIsOpen(!isOpen)
+	}
+
+	return (
+		<Button variant="ghost" size="icon" onClick={toggleSidebar}>
+			<HamburgerIcon className="h-5 w-5" />
+		</Button>
+	)
+}
+
 // TODO: Change link color when it's active
-export function Sidebar({ isOpen = true }: { isOpen?: boolean }) {
+export function Sidebar() {
+	const [isOpen] = useSidebar()
+
 	return isOpen ? (
 		<aside className="flex w-64 flex-col justify-between border border-red-300 p-4">
 			<div className="flex flex-col gap-2">

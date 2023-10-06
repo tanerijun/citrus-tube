@@ -1,12 +1,9 @@
 import { json, redirect, type LoaderFunctionArgs } from "@remix-run/cloudflare"
 import { Outlet, useLoaderData, type MetaFunction } from "@remix-run/react"
-import { useState } from "react"
-import { HamburgerIcon } from "~/components/icons/hamburger"
-import { Button } from "~/components/ui/button"
 import { getAuth } from "~/lib/auth.server"
 import { getUserData } from "~/lib/services/user.server"
 import { Navbar } from "~/routes/_home/navbar"
-import { Sidebar } from "~/routes/_home/sidebar"
+import { Sidebar, SidebarProvider, SidebarTrigger } from "~/routes/_home/sidebar"
 
 export const meta: MetaFunction = () => {
 	return [
@@ -41,25 +38,19 @@ export function useHomeLayoutLoaderData() {
 }
 
 export default function HomeLayout() {
-	const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-
-	const toggleSidebar = () => {
-		setIsSidebarOpen(!isSidebarOpen)
-	}
-
 	return (
 		<div className="flex min-h-screen flex-col">
-			<Navbar>
-				<Button variant="ghost" size="icon" onClick={toggleSidebar}>
-					<HamburgerIcon className="h-5 w-5" />
-				</Button>
-			</Navbar>
-			<div className="flex flex-1">
-				<Sidebar isOpen={isSidebarOpen} />
-				<main>
-					<Outlet />
-				</main>
-			</div>
+			<SidebarProvider>
+				<Navbar>
+					<SidebarTrigger />
+				</Navbar>
+				<div className="flex flex-1">
+					<Sidebar />
+					<main>
+						<Outlet />
+					</main>
+				</div>
+			</SidebarProvider>
 		</div>
 	)
 }
