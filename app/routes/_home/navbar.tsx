@@ -3,7 +3,6 @@ import { Form, Link } from "@remix-run/react"
 import { AlertCircleIcon } from "~/components/icons/alert-circle"
 import { BugIcon } from "~/components/icons/bug"
 import { CitrusIcon } from "~/components/icons/citrus"
-import { HamburgerIcon } from "~/components/icons/hamburger"
 import { HelpCircleIcon } from "~/components/icons/help-circle"
 import { LayoutDashboardIcon } from "~/components/icons/layout-dashboard"
 import { LogoutIcon } from "~/components/icons/logout"
@@ -129,15 +128,13 @@ function Menu() {
 	)
 }
 
-export function Navbar() {
+export function Navbar({ children: slotBeforeLogo }: { children: React.ReactNode }) {
 	const { user } = useHomeLayoutLoaderData()
 
 	return (
 		<header className="mx-6 flex items-center gap-4 py-4">
 			<div className="flex gap-1 md:gap-4">
-				<Button variant="ghost" size="icon">
-					<HamburgerIcon className="h-5 w-5" />
-				</Button>
+				{slotBeforeLogo}
 				<Logo />
 			</div>
 			<div className="flex flex-1 justify-end gap-1 md:justify-between md:gap-4">
