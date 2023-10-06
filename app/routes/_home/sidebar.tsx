@@ -11,7 +11,7 @@ import { UsersIcon } from "~/components/icons/users"
 import { VideoIcon } from "~/components/icons/video"
 import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
 import { Button } from "~/components/ui/button"
-import { cn } from "~/lib/utils"
+import { cn, isSmallScreen } from "~/lib/utils"
 
 const sidebarItems = [
 	{ name: "Home", path: "/", icon: <HomeIcon /> },
@@ -32,7 +32,7 @@ const SidebarContext = createContext<
 >(null)
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
-	const [isOpen, setIsOpen] = useState(true)
+	const [isOpen, setIsOpen] = useState(false)
 
 	return <SidebarContext.Provider value={[isOpen, setIsOpen]}>{children}</SidebarContext.Provider>
 }
@@ -57,17 +57,31 @@ export function SidebarTrigger() {
 	}
 
 	return (
-		<Button variant="ghost" size="icon" onClick={toggleSidebar} className="ml-0 md:-ml-0.5">
+		<Button variant="ghost" size="icon" onClick={toggleSidebar} className="-ml-0.5">
 			<HamburgerIcon className="h-5 w-5" />
 		</Button>
 	)
 }
 
 function SidebarItems({ items, isExpanded }: { items: typeof sidebarItems; isExpanded: boolean }) {
+	const [isOpen, setIsOpen] = useSidebar()
+
+	const closeSidebar = () => {
+		if (isOpen && isSmallScreen()) {
+			setIsOpen(false)
+		}
+	}
+
 	return (
 		<div className="flex flex-col gap-2">
 			{items.map((item) => (
-				<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
+				<Button
+					key={item.name}
+					variant="ghost"
+					className="flex justify-start"
+					asChild
+					onClick={closeSidebar}
+				>
 					<AutoAnimatedContainer asChild>
 						<Link to={item.path}>
 							<span className={cn("text-lg", isExpanded && "mr-3")}>{item.icon}</span>
@@ -86,7 +100,11 @@ export function Sidebar() {
 
 	return (
 		<aside
-			className={cn("flex flex-col justify-between border border-red-300 p-4", isOpen && "w-64")}
+			className={cn(
+				"flex-col justify-between border border-red-300 p-4 md:flex",
+				!isOpen && "hidden",
+				isOpen && "flex w-full md:w-64",
+			)}
 		>
 			<SidebarItems items={sidebarItems} isExpanded={isOpen} />
 			<SidebarItems items={sidebarFooterItems} isExpanded={isOpen} />
