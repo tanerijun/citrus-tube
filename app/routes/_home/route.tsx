@@ -3,7 +3,13 @@ import { Outlet, type MetaFunction } from "@remix-run/react"
 import { getAuth } from "~/lib/auth.server"
 import { getUserData } from "~/lib/services/user.server"
 import { Navbar } from "~/routes/_home/navbar"
-import { Sidebar, SidebarProvider, SidebarTrigger } from "~/routes/_home/sidebar"
+import {
+	MobileSidebar,
+	MobileSidebarTrigger,
+	Sidebar,
+	SidebarProvider,
+	SidebarTrigger,
+} from "~/routes/_home/sidebar"
 
 export const meta: MetaFunction = () => {
 	return [
@@ -39,9 +45,11 @@ export default function HomeLayout() {
 			<SidebarProvider>
 				<Navbar>
 					<SidebarTrigger />
+					<MobileSidebarTrigger />
 				</Navbar>
 				<div className="flex flex-1">
 					<Sidebar />
+					<MobileSidebar />
 					<main>
 						<Outlet />
 					</main>

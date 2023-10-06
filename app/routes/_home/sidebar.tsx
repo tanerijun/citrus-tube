@@ -11,7 +11,9 @@ import { UsersIcon } from "~/components/icons/users"
 import { VideoIcon } from "~/components/icons/video"
 import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
 import { Button } from "~/components/ui/button"
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "~/components/ui/sheet"
 import { cn, isSmallScreen } from "~/lib/utils"
+import { Logo } from "./navbar"
 
 const sidebarItems = [
 	{ name: "Home", path: "/", icon: <HomeIcon /> },
@@ -34,7 +36,11 @@ const SidebarContext = createContext<
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
 	const [isOpen, setIsOpen] = useState(false)
 
-	return <SidebarContext.Provider value={[isOpen, setIsOpen]}>{children}</SidebarContext.Provider>
+	return (
+		<SidebarContext.Provider value={[isOpen, setIsOpen]}>
+			<Sheet>{children}</Sheet>
+		</SidebarContext.Provider>
+	)
 }
 
 function useSidebar() {
@@ -57,7 +63,7 @@ export function SidebarTrigger() {
 	}
 
 	return (
-		<Button variant="ghost" size="icon" onClick={toggleSidebar} className="-ml-0.5">
+		<Button variant="ghost" size="icon" onClick={toggleSidebar} className="-ml-0.5 hidden md:flex">
 			<HamburgerIcon className="h-5 w-5" />
 		</Button>
 	)
@@ -99,15 +105,33 @@ export function Sidebar() {
 	const [isOpen] = useSidebar()
 
 	return (
-		<aside
-			className={cn(
-				"flex-col justify-between border border-red-300 p-4 md:flex",
-				!isOpen && "hidden",
-				isOpen && "flex w-full md:w-64",
-			)}
-		>
+		<aside className={cn("hidden flex-col justify-between p-4 md:flex", isOpen && "w-64")}>
 			<SidebarItems items={sidebarItems} isExpanded={isOpen} />
 			<SidebarItems items={sidebarFooterItems} isExpanded={isOpen} />
 		</aside>
+	)
+}
+
+export function MobileSidebarTrigger() {
+	return (
+		<SheetTrigger asChild className="md:hidden">
+			<Button variant="ghost" size="icon" className="-ml-0.5">
+				<HamburgerIcon className="h-5 w-5" />
+			</Button>
+		</SheetTrigger>
+	)
+}
+
+export function MobileSidebar() {
+	return (
+		<SheetContent side="left" className="flex flex-col">
+			<SheetHeader className="mb-6 ml-3 text-left">
+				<Logo />
+			</SheetHeader>
+			<div className="flex h-full flex-col justify-between">
+				<SidebarItems items={sidebarItems} isExpanded={true} />
+				<SidebarItems items={sidebarFooterItems} isExpanded={true} />
+			</div>
+		</SheetContent>
 	)
 }

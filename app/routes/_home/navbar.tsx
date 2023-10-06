@@ -20,9 +20,9 @@ import {
 import { Input } from "~/components/ui/input"
 import { type loader } from "./route"
 
-function Logo() {
+export function Logo() {
 	return (
-		<Link to="/">
+		<Link to="/" className="w-fit">
 			<div className="flex items-center justify-center gap-0">
 				<CitrusIcon className="text-primary h-8 w-8" />
 				<h2 className="text-primary text-3xl font-bold">Citrus</h2>
