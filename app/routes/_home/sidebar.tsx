@@ -55,7 +55,7 @@ export function SidebarTrigger() {
 	}
 
 	return (
-		<Button variant="ghost" size="icon" onClick={toggleSidebar}>
+		<Button variant="ghost" size="icon" onClick={toggleSidebar} className="ml-0 md:-ml-0.5">
 			<HamburgerIcon className="h-5 w-5" />
 		</Button>
 	)
@@ -88,5 +88,26 @@ export function Sidebar() {
 				))}
 			</div>
 		</aside>
-	) : null
+	) : (
+		<aside className="flex flex-col justify-between border border-red-300 p-4">
+			<div className="flex flex-col gap-2">
+				{sidebarItems.map((item) => (
+					<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
+						<Link to={item.path}>
+							<span className="text-lg">{item.icon}</span>
+						</Link>
+					</Button>
+				))}
+			</div>
+			<div className="flex flex-col gap-2">
+				{sidebarFooterItems.map((item) => (
+					<Button key={item.name} variant="ghost" className="flex justify-start" asChild>
+						<Link to={item.path}>
+							<span className="text-lg">{item.icon}</span>
+						</Link>
+					</Button>
+				))}
+			</div>
+		</aside>
+	)
 }
