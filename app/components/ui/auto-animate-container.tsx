@@ -1,12 +1,12 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
 import autoAnimate from "@formkit/auto-animate"
+import { Slot } from "@radix-ui/react-slot"
+import * as React from "react"
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	asChild?: boolean
 }
 
-const AutoAnimatedContainer = React.forwardRef<HTMLDivElement, Props>(
+const AutoAnimateContainer = React.forwardRef<HTMLDivElement, Props>(
 	({ asChild, ...props }, forwardedRef) => {
 		const Comp = asChild ? Slot : "div"
 
@@ -21,6 +21,6 @@ const AutoAnimatedContainer = React.forwardRef<HTMLDivElement, Props>(
 		return <Comp ref={innerRef} {...props} />
 	},
 )
-AutoAnimatedContainer.displayName = "AutoAnimatedContainer"
+AutoAnimateContainer.displayName = "AutoAnimatedContainer"
 
-export { AutoAnimatedContainer }
+export { AutoAnimateContainer }

@@ -6,7 +6,7 @@ import { useId } from "react"
 import { AuthorizationError } from "remix-auth"
 import { z } from "zod"
 import { Alert, AlertDescription } from "~/components/ui/alert"
-import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
+import { AutoAnimateContainer } from "~/components/ui/auto-animate-container"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { Input } from "~/components/ui/input"
@@ -74,7 +74,7 @@ export default function Login() {
 							<AlertDescription>{data.message}</AlertDescription>
 						</Alert>
 					)}
-					<AutoAnimatedContainer className="flex flex-col gap-2">
+					<AutoAnimateContainer className="flex flex-col gap-2">
 						<Label htmlFor={fields.email.id}>Email</Label>
 						<Input {...conform.input(fields.email, { type: "email" })} />
 						{fields.email.error && (
@@ -82,8 +82,8 @@ export default function Login() {
 								{fields.email.error}
 							</p>
 						)}
-					</AutoAnimatedContainer>
-					<AutoAnimatedContainer className="flex flex-col gap-2">
+					</AutoAnimateContainer>
+					<AutoAnimateContainer className="flex flex-col gap-2">
 						<Label htmlFor={fields.password.id}>Password</Label>
 						<Input {...conform.input(fields.password, { type: "password" })} />
 						{fields.password.error && (
@@ -91,7 +91,7 @@ export default function Login() {
 								{fields.password.error}
 							</p>
 						)}
-					</AutoAnimatedContainer>
+					</AutoAnimateContainer>
 					<Button type="submit">Login</Button>
 					<small>
 						Don't have an account?{" "}

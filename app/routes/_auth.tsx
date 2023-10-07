@@ -1,12 +1,12 @@
 import { Outlet } from "@remix-run/react"
-import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
+import { AutoAnimateContainer } from "~/components/ui/auto-animate-container"
 
 export default function AuthLayout() {
 	return (
-		<AutoAnimatedContainer asChild>
+		<AutoAnimateContainer asChild>
 			<main className="mx-6 flex h-screen items-center justify-center">
 				<Outlet />
 			</main>
-		</AutoAnimatedContainer>
+		</AutoAnimateContainer>
 	)
 }

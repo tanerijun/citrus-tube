@@ -10,7 +10,7 @@ import { Form, Link, useActionData } from "@remix-run/react"
 import { useId } from "react"
 import { z } from "zod"
 import { Alert, AlertDescription } from "~/components/ui/alert"
-import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
+import { AutoAnimateContainer } from "~/components/ui/auto-animate-container"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { Input } from "~/components/ui/input"
@@ -109,7 +109,7 @@ export default function Register() {
 							<AlertDescription>{data.message}</AlertDescription>
 						</Alert>
 					)}
-					<AutoAnimatedContainer className="flex flex-col gap-2">
+					<AutoAnimateContainer className="flex flex-col gap-2">
 						<Label htmlFor={fields.username.id}>Username</Label>
 						<Input {...conform.input(fields.username, { type: "text" })} />
 						{fields.username.error && (
@@ -117,8 +117,8 @@ export default function Register() {
 								{fields.username.error}
 							</p>
 						)}
-					</AutoAnimatedContainer>
-					<AutoAnimatedContainer className="flex flex-col gap-2">
+					</AutoAnimateContainer>
+					<AutoAnimateContainer className="flex flex-col gap-2">
 						<Label htmlFor={fields.email.id}>Email</Label>
 						<Input {...conform.input(fields.email, { type: "email" })} />
 						{fields.email.error && (
@@ -126,8 +126,8 @@ export default function Register() {
 								{fields.email.error}
 							</p>
 						)}
-					</AutoAnimatedContainer>
-					<AutoAnimatedContainer className="flex flex-col gap-2">
+					</AutoAnimateContainer>
+					<AutoAnimateContainer className="flex flex-col gap-2">
 						<Label htmlFor={fields.password.id}>Password</Label>
 						<Input {...conform.input(fields.password, { type: "password" })} />
 						{fields.password.error && (
@@ -135,8 +135,8 @@ export default function Register() {
 								{fields.password.error}
 							</p>
 						)}
-					</AutoAnimatedContainer>
-					<AutoAnimatedContainer className="flex flex-col gap-2">
+					</AutoAnimateContainer>
+					<AutoAnimateContainer className="flex flex-col gap-2">
 						<Label htmlFor={fields.confirmPassword.id}>Confirm password</Label>
 						<Input {...conform.input(fields.confirmPassword, { type: "password" })} />
 						{fields.confirmPassword.error && (
@@ -144,7 +144,7 @@ export default function Register() {
 								{fields.confirmPassword.error}
 							</p>
 						)}
-					</AutoAnimatedContainer>
+					</AutoAnimateContainer>
 					<Button type="submit">Register</Button>
 					<small>
 						Already have an account?{" "}
