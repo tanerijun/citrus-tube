@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react"
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { HamburgerIcon } from "~/components/icons/hamburger"
 import { HelpCircleIcon } from "~/components/icons/help-circle"
 import { HistoryIcon } from "~/components/icons/history"
@@ -9,7 +9,6 @@ import { SettingsIcon } from "~/components/icons/settings"
 import { ThumbsUpIcon } from "~/components/icons/thumbs-up"
 import { UsersIcon } from "~/components/icons/users"
 import { VideoIcon } from "~/components/icons/video"
-import { AutoAnimatedContainer } from "~/components/ui/auto-animated-container"
 import { Button } from "~/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "~/components/ui/sheet"
 import { cn, isSmallScreen } from "~/lib/utils"
@@ -69,6 +68,38 @@ export function SidebarTrigger() {
 	)
 }
 
+function SlidingSpan({ show, children }: { show: boolean; children: React.ReactNode }) {
+	const [shouldRender, setShouldRender] = useState(show)
+
+	useEffect(() => {
+		if (show) {
+			setShouldRender(true)
+		}
+	}, [show])
+
+	const handleAnimationEnd = () => {
+		if (!show) {
+			setShouldRender(false)
+		}
+	}
+
+	return (
+		shouldRender && (
+			<span
+				className={cn(
+					"ml-3",
+					show
+						? "animate-in slide-in-from-left-4 fade-in-40"
+						: "animate-out slide-out-to-right-4 fade-out-40",
+				)}
+				onAnimationEnd={handleAnimationEnd}
+			>
+				{children}
+			</span>
+		)
+	)
+}
+
 function SidebarItems({ items, isExpanded }: { items: typeof sidebarItems; isExpanded: boolean }) {
 	const [isOpen, setIsOpen] = useSidebar()
 
@@ -88,12 +119,10 @@ function SidebarItems({ items, isExpanded }: { items: typeof sidebarItems; isExp
 					asChild
 					onClick={closeSidebar}
 				>
-					<AutoAnimatedContainer asChild>
-						<Link to={item.path}>
-							<span className={cn("text-lg", isExpanded && "mr-3")}>{item.icon}</span>
-							{isExpanded && <span className="overflow-x-hidden">{item.name}</span>}
-						</Link>
-					</AutoAnimatedContainer>
+					<Link to={item.path}>
+						<span className="text-lg">{item.icon}</span>
+						<SlidingSpan show={isExpanded}>{item.name}</SlidingSpan>
+					</Link>
 				</Button>
 			))}
 		</div>
