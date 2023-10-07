@@ -33,7 +33,7 @@ const SidebarContext = createContext<
 	[boolean, React.Dispatch<React.SetStateAction<boolean>>] | null
 >(null)
 
-export function SidebarProvider({ children }: { children: React.ReactNode }) {
+function SidebarProvider({ children }: { children: React.ReactNode }) {
 	const [isOpen, setIsOpen] = useState(false)
 
 	return (
@@ -53,20 +53,6 @@ function useSidebar() {
 	}
 
 	return contextValue
-}
-
-export function SidebarTrigger() {
-	const [isOpen, setIsOpen] = useSidebar()
-
-	const toggleSidebar = () => {
-		setIsOpen(!isOpen)
-	}
-
-	return (
-		<Button variant="ghost" size="icon" onClick={toggleSidebar} className="-ml-0.5 hidden md:flex">
-			<HamburgerIcon className="h-5 w-5" />
-		</Button>
-	)
 }
 
 function SidebarItems({ items, isExpanded }: { items: typeof sidebarItems; isExpanded: boolean }) {
@@ -106,8 +92,22 @@ function SidebarItems({ items, isExpanded }: { items: typeof sidebarItems; isExp
 	)
 }
 
+function DesktopSidebarTrigger() {
+	const [isOpen, setIsOpen] = useSidebar()
+
+	const toggleSidebar = () => {
+		setIsOpen(!isOpen)
+	}
+
+	return (
+		<Button variant="ghost" size="icon" onClick={toggleSidebar} className="-ml-0.5 hidden md:flex">
+			<HamburgerIcon className="h-5 w-5" />
+		</Button>
+	)
+}
+
 // TODO: Change link color when it's active
-export function Sidebar() {
+function DesktopSidebar() {
 	const [isOpen] = useSidebar()
 
 	return (
@@ -123,7 +123,7 @@ export function Sidebar() {
 	)
 }
 
-export function MobileSidebarTrigger() {
+function MobileSidebarTrigger() {
 	return (
 		<SheetTrigger asChild className="md:hidden">
 			<Button variant="ghost" size="icon" className="-ml-0.5">
@@ -133,7 +133,7 @@ export function MobileSidebarTrigger() {
 	)
 }
 
-export function MobileSidebar() {
+function MobileSidebar() {
 	return (
 		<SheetContent side="left" className="flex flex-col">
 			<SheetHeader className="mb-6 ml-3 text-left">
@@ -146,3 +146,23 @@ export function MobileSidebar() {
 		</SheetContent>
 	)
 }
+
+function SidebarTrigger() {
+	return (
+		<>
+			<DesktopSidebarTrigger />
+			<MobileSidebarTrigger />
+		</>
+	)
+}
+
+function Sidebar() {
+	return (
+		<>
+			<DesktopSidebar />
+			<MobileSidebar />
+		</>
+	)
+}
+
+export { Sidebar, SidebarProvider, SidebarTrigger }
