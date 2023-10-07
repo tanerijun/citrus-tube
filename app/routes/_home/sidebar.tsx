@@ -90,13 +90,12 @@ function SidebarItems({ items, isExpanded }: { items: typeof sidebarItems; isExp
 				>
 					<Link to={item.path}>
 						<span className="text-lg">{item.icon}</span>
-						{/* <SlidingSpan show={isExpanded}>{item.name}</SlidingSpan> */}
 						<CSSAnimationContainer
 							asChild
 							mount={isExpanded}
-							onMountClass="animate-in slide-in-from-left-4 fade-in-40"
-							onUnmountClass="animate-out slide-out-to-right-4 fade-out-40"
-							className="ml-3"
+							onMountClass="animate-in fade-in duration-500"
+							onUnmountClass="animate-out fade-out duration-500"
+							className="ml-3 overflow-x-hidden whitespace-nowrap"
 						>
 							<span>{item.name}</span>
 						</CSSAnimationContainer>
@@ -112,7 +111,12 @@ export function Sidebar() {
 	const [isOpen] = useSidebar()
 
 	return (
-		<aside className={cn("hidden flex-col justify-between p-4 md:flex", isOpen && "w-64")}>
+		<aside
+			className={cn(
+				"hidden w-[5.3rem] flex-col justify-between p-4 transition-all duration-500 md:flex",
+				isOpen && "w-64",
+			)}
+		>
 			<SidebarItems items={sidebarItems} isExpanded={isOpen} />
 			<SidebarItems items={sidebarFooterItems} isExpanded={isOpen} />
 		</aside>
