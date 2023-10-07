@@ -6,6 +6,9 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 	asChild?: boolean
 }
 
+/**
+ * Automatically animate direct children when they mount/unmount/move
+ */
 const AutoAnimateContainer = React.forwardRef<HTMLDivElement, Props>(
 	({ asChild, ...props }, forwardedRef) => {
 		const Comp = asChild ? Slot : "div"
