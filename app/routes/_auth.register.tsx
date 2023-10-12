@@ -51,7 +51,6 @@ export async function action({ request }: ActionFunctionArgs) {
 	const submission = parse(formData, { schema })
 
 	if (submission.intent !== "submit" || !submission.value) {
-		console.log("INSIDE IF", submission.value)
 		return json({ submission, message: null })
 	}
 
@@ -113,7 +112,7 @@ export default function Register() {
 						<Label htmlFor={fields.username.id}>Username</Label>
 						<Input {...conform.input(fields.username, { type: "text" })} />
 						{fields.username.error && (
-							<p id={fields.username.errorId} className="text-destructive text-xs">
+							<p id={fields.username.errorId} className="text-xs text-destructive">
 								{fields.username.error}
 							</p>
 						)}
@@ -122,7 +121,7 @@ export default function Register() {
 						<Label htmlFor={fields.email.id}>Email</Label>
 						<Input {...conform.input(fields.email, { type: "email" })} />
 						{fields.email.error && (
-							<p id={fields.email.errorId} className="text-destructive text-xs">
+							<p id={fields.email.errorId} className="text-xs text-destructive">
 								{fields.email.error}
 							</p>
 						)}
@@ -131,7 +130,7 @@ export default function Register() {
 						<Label htmlFor={fields.password.id}>Password</Label>
 						<Input {...conform.input(fields.password, { type: "password" })} />
 						{fields.password.error && (
-							<p id={fields.password.errorId} className="text-destructive text-xs">
+							<p id={fields.password.errorId} className="text-xs text-destructive">
 								{fields.password.error}
 							</p>
 						)}
@@ -140,7 +139,7 @@ export default function Register() {
 						<Label htmlFor={fields.confirmPassword.id}>Confirm password</Label>
 						<Input {...conform.input(fields.confirmPassword, { type: "password" })} />
 						{fields.confirmPassword.error && (
-							<p id={fields.confirmPassword.errorId} className="text-destructive text-xs">
+							<p id={fields.confirmPassword.errorId} className="text-xs text-destructive">
 								{fields.confirmPassword.error}
 							</p>
 						)}
