@@ -2,11 +2,13 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/cloudfla
 import { json } from "@remix-run/cloudflare"
 import { Form, useLoaderData } from "@remix-run/react"
 import { getAuth } from "~/lib/auth.server"
+import { getVideos } from "~/lib/services/video.server"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const user = await getAuth().authenticator.isAuthenticated(request)
+	const videos = await getVideos()
 
-	return json(user)
+	return json({ user, videos })
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -14,7 +16,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 }
 
 export default function Index() {
-	const user = useLoaderData<typeof loader>()
+	const { user, videos } = useLoaderData<typeof loader>()
+
+	console.log(videos)
+	// console.log(typeof videos[0].user?.profileImageUrl)
 
 	return (
 		<div>
