@@ -1,10 +1,10 @@
-import { eq } from "drizzle-orm"
+// import { eq } from "drizzle-orm"
 import { getDb } from "../db.server"
-import { user } from "../schema.server"
 
 export async function getCompleteUserData(id: number) {
 	const db = getDb()
-	const userData = await db.select().from(user).where(eq(user.id, id)).get()
+	const userData = await db.query.user.findFirst({ where: (user, { eq }) => eq(user.id, id) })
+
 	return userData
 }
 
