@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm"
+import { relations, sql } from "drizzle-orm"
 import { index, integer, primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core"
 
 export const user = sqliteTable(
@@ -66,6 +66,10 @@ export const video = sqliteTable(
 		}
 	},
 )
+
+export const videoRelations = relations(video, ({ one }) => ({
+	owner: one(user, { fields: [video.userId], references: [user.id] }),
+}))
 
 export type Video = typeof video.$inferSelect
 export type NewVideo = typeof video.$inferInsert
