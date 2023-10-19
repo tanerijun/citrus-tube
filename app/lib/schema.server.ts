@@ -8,7 +8,7 @@ export const user = sqliteTable(
 		username: text("username").unique().notNull(),
 		email: text("email").unique().notNull(),
 		password: text("password").notNull(),
-		createdAt: integer("created_at", { mode: "timestamp" })
+		createdAt: integer("created_at", { mode: "timestamp_ms" })
 			.default(sql`(unixepoch('now'))`)
 			.notNull(),
 		profileImageUrl: text("profile_image_url"),
@@ -56,7 +56,7 @@ export const video = sqliteTable(
 		userId: integer("user_id")
 			.references(() => user.id, { onDelete: "cascade" })
 			.notNull(),
-		createdAt: integer("created_at", { mode: "timestamp" })
+		createdAt: integer("created_at", { mode: "timestamp_ms" })
 			.default(sql`(unixepoch('now'))`)
 			.notNull(),
 	},
@@ -108,7 +108,7 @@ export const playlist = sqliteTable(
 		userId: integer("user_id")
 			.references(() => user.id, { onDelete: "cascade" })
 			.notNull(),
-		createdAt: integer("created_at", { mode: "timestamp" })
+		createdAt: integer("created_at", { mode: "timestamp_ms" })
 			.default(sql`(unixepoch('now'))`)
 			.notNull(),
 	},
@@ -147,7 +147,7 @@ export const comment = sqliteTable(
 		videoId: integer("video_id")
 			.references(() => video.id, { onDelete: "cascade" })
 			.notNull(),
-		createdAt: integer("created_at", { mode: "timestamp" })
+		createdAt: integer("created_at", { mode: "timestamp_ms" })
 			.default(sql`(unixepoch('now'))`)
 			.notNull(),
 	},
@@ -166,7 +166,7 @@ export const post = sqliteTable(
 		userId: integer("user_id")
 			.references(() => user.id, { onDelete: "cascade" })
 			.notNull(),
-		createdAt: integer("created_at", { mode: "timestamp" })
+		createdAt: integer("created_at", { mode: "timestamp_ms" })
 			.default(sql`(unixepoch('now'))`)
 			.notNull(),
 	},
