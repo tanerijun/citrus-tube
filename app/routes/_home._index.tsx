@@ -1,14 +1,30 @@
+import { fill } from "@cloudinary/url-gen/actions/resize"
+import { Cloudinary } from "@cloudinary/url-gen/index"
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
-import { Form, useLoaderData } from "@remix-run/react"
+import { useLoaderData } from "@remix-run/react"
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
+import { Card, CardContent } from "~/components/ui/card"
 import { getAuth } from "~/lib/auth.server"
 import { getVideos } from "~/lib/services/video.server"
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-	const user = await getAuth().authenticator.isAuthenticated(request)
-	const videos = await getVideos()
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+	const videos = (await getVideos()).map((video) => {
+		const cld = new Cloudinary({ cloud: { cloudName: context.CLOUDINARY_CLOUD_NAME as string } }) // TODO: eliminate "as string"
 
-	return json({ user, videos })
+		return {
+			...video,
+			thumbnailUrl: cld.image(video.thumbnailUrl).resize(fill().width(500).height(300)).toURL(),
+			owner: {
+				...video.owner,
+				profileImageUrl: video.owner.profileImageUrl
+					? cld.image(video.owner.profileImageUrl).toURL()
+					: null,
+			},
+		}
+	})
+
+	return json(videos)
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -16,17 +32,39 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 }
 
 export default function Index() {
-	const { user, videos } = useLoaderData<typeof loader>()
+	const videos = useLoaderData<typeof loader>()
 
 	console.log(videos)
-	// console.log(typeof videos[0].user?.profileImageUrl)
 
 	return (
-		<div>
-			<h1 className="text-red-500 underline">Hello {user ? user.username : "Anonymous"}!</h1>
-			<Form method="post">
-				<button type="submit">Log out</button>
-			</Form>
+		<div className="grid grid-cols-3 gap-4">
+			{videos.map((video) => {
+				return (
+					<article key={video.id}>
+						<Card className="h-full">
+							<CardContent className="flex flex-col gap-4 p-2">
+								<img src={video.thumbnailUrl} alt={video.title} />
+								<div className="flex gap-4">
+									<Avatar>
+										<AvatarImage
+											src={video.owner.profileImageUrl ?? undefined}
+											alt={video.owner.username}
+										/>
+										<AvatarFallback>
+											{video.owner.username.slice(0, 2).toUpperCase()}
+										</AvatarFallback>
+									</Avatar>
+									<div className="flex flex-col">
+										<h3 className="line-clamp-2 font-bold">{video.title}</h3>
+										<span className="text-sm">{video.owner.username}</span>
+										<span className="text-sm">10 views · 4 days ago</span>
+									</div>
+								</div>
+							</CardContent>
+						</Card>
+					</article>
+				)
+			})}
 		</div>
 	)
 }

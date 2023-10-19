@@ -24,8 +24,8 @@ export function Logo() {
 	return (
 		<Link to="/" className="w-fit">
 			<div className="flex items-center justify-center gap-0">
-				<CitrusIcon className="text-primary h-8 w-8" />
-				<h2 className="text-primary text-3xl font-bold">Citrus</h2>
+				<CitrusIcon className="h-8 w-8 text-primary" />
+				<h2 className="text-3xl font-bold text-primary">Citrus</h2>
 			</div>
 		</Link>
 	)
@@ -116,7 +116,7 @@ function Menu() {
 					<Form method="POST" action="/logout">
 						<button
 							type="submit"
-							className="text-destructive flex w-full items-center justify-start"
+							className="flex w-full items-center justify-start text-destructive"
 						>
 							<LogoutIcon className="mr-2" />
 							Log out
