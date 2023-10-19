@@ -2,7 +2,7 @@ import { fill } from "@cloudinary/url-gen/actions/resize"
 import { Cloudinary } from "@cloudinary/url-gen/index"
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
-import { useLoaderData } from "@remix-run/react"
+import { Link, useLoaderData } from "@remix-run/react"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Card, CardContent } from "~/components/ui/card"
 import { getAuth } from "~/lib/auth.server"
@@ -40,7 +40,7 @@ export default function Index() {
 		<div className="grid grid-cols-3 gap-4">
 			{videos.map((video) => {
 				return (
-					<article key={video.id}>
+					<Link key={video.id} to={`video/${video.id}`}>
 						<Card className="h-full">
 							<CardContent className="flex flex-col gap-4 p-2">
 								<img src={video.thumbnailUrl} alt={video.title} />
@@ -56,13 +56,15 @@ export default function Index() {
 									</Avatar>
 									<div className="flex flex-col">
 										<h3 className="line-clamp-2 font-bold">{video.title}</h3>
-										<span className="text-sm">{video.owner.username}</span>
+										<Link to={`user/${video.owner.id}`} className="text-sm">
+											{video.owner.username}
+										</Link>
 										<span className="text-sm">10 views · 4 days ago</span>
 									</div>
 								</div>
 							</CardContent>
 						</Card>
-					</article>
+					</Link>
 				)
 			})}
 		</div>
