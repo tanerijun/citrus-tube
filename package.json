@@ -30,6 +30,7 @@
     "@remix-run/react": "^2.0.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
     "drizzle-orm": "^0.28.6",
     "isbot": "latest",
     "react": "^18.2.0",

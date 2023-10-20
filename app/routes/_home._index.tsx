@@ -3,6 +3,7 @@ import { Cloudinary } from "@cloudinary/url-gen/index"
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/cloudflare"
 import { json } from "@remix-run/cloudflare"
 import { Link, useLoaderData } from "@remix-run/react"
+import { formatDistanceToNowStrict } from "date-fns"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Card, CardContent } from "~/components/ui/card"
 import { getAuth } from "~/lib/auth.server"
@@ -65,7 +66,7 @@ export default function Index() {
 										{video.owner.username}
 									</Link>
 									<span className="text-sm">
-										10 views · {new Date(video.createdAt).toDateString()}
+										10 views · {formatDistanceToNowStrict(new Date(video.createdAt))} ago
 									</span>
 								</div>
 								{/* Link overlay for the whole card */}
