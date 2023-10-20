@@ -40,11 +40,11 @@ export default function Index() {
 		<div className="grid grid-cols-3 gap-4">
 			{videos.map((video) => {
 				return (
-					<Link key={video.id} to={`video/${video.id}`}>
-						<Card className="h-full">
-							<CardContent className="flex flex-col gap-4 p-2">
-								<img src={video.thumbnailUrl} alt={video.title} />
-								<div className="flex gap-4">
+					<Card key={video.id} className="relative h-full">
+						<CardContent className="relative flex h-full flex-col gap-4 p-2">
+							<img src={video.thumbnailUrl} alt={video.title} />
+							<div className="flex gap-4">
+								<Link to={`user/${video.owner.id}`} className="z-10">
 									<Avatar>
 										<AvatarImage
 											src={video.owner.profileImageUrl ?? undefined}
@@ -54,17 +54,30 @@ export default function Index() {
 											{video.owner.username.slice(0, 2).toUpperCase()}
 										</AvatarFallback>
 									</Avatar>
-									<div className="flex flex-col">
-										<h3 className="line-clamp-2 font-bold">{video.title}</h3>
-										<Link to={`user/${video.owner.id}`} className="text-sm">
-											{video.owner.username}
+								</Link>
+								<div className="flex flex-col">
+									<h3 className="line-clamp-2 font-bold">
+										<Link to={`video/${video.id}`} className="z-10">
+											{video.title}
 										</Link>
-										<span className="text-sm">10 views · 4 days ago</span>
-									</div>
+									</h3>
+									<Link to={`user/${video.owner.id}`} className="z-10 text-sm">
+										{video.owner.username}
+									</Link>
+									<span className="text-sm">
+										10 views · {new Date(video.createdAt).toDateString()}
+									</span>
 								</div>
-							</CardContent>
-						</Card>
-					</Link>
+								{/* Link overlay for the whole card */}
+								<Link
+									to={`video/${video.id}`}
+									className="absolute inset-0 z-0 overflow-hidden whitespace-nowrap indent-[100%]"
+								>
+									Watch video
+								</Link>
+							</div>
+						</CardContent>
+					</Card>
 				)
 			})}
 		</div>
