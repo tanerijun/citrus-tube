@@ -12,7 +12,7 @@ import { VideoIcon } from "~/components/icons/video"
 import { Button } from "~/components/ui/button"
 import { CSSAnimationContainer } from "~/components/ui/css-animation-container"
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "~/components/ui/sheet"
-import { cn, isSmallScreen } from "~/lib/utils"
+import { cn, isSmallScreen } from "~/utils"
 import { Logo } from "./navbar"
 
 const sidebarItems = [

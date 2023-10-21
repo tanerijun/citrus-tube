@@ -1,8 +1,8 @@
 import { logDevReady } from "@remix-run/cloudflare"
 import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages"
 import * as build from "@remix-run/dev/server-build"
-import { initializeAuth } from "~/lib/auth.server"
-import { initializeDb } from "~/lib/db.server"
+import { initializeAuth } from "~/server/auth.server"
+import { initializeDb } from "~/server/db.server"
 
 if (process.env.NODE_ENV === "development") {
 	logDevReady(build)

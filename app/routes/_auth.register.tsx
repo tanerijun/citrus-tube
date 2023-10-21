@@ -15,8 +15,8 @@ import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
-import { getAuth } from "~/lib/auth.server"
-import { commitSession, getSession } from "~/lib/session.server"
+import { getAuth } from "~/server/auth.server"
+import { commitSession, getSession } from "~/server/session.server"
 
 const schema = z
 	.object({

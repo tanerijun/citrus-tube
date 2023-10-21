@@ -6,8 +6,8 @@ import { Link, useLoaderData } from "@remix-run/react"
 import { formatDistanceToNowStrict } from "date-fns"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Card, CardContent } from "~/components/ui/card"
-import { getAuth } from "~/lib/auth.server"
-import { getVideos } from "~/lib/services/video.server"
+import { getAuth } from "~/server/auth.server"
+import { getVideos } from "~/server/services/video.server"
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	const videos = (await getVideos()).map((video) => {

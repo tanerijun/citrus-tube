@@ -1,5 +1,5 @@
 import { type ActionFunctionArgs, type LoaderFunctionArgs } from "@remix-run/cloudflare"
-import { getAuth } from "~/lib/auth.server"
+import { getAuth } from "~/server/auth.server"
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const auth = getAuth()
