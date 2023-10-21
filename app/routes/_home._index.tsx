@@ -11,7 +11,7 @@ import { getVideos } from "~/lib/services/video.server"
 
 export const loader = async ({ request, context }: LoaderFunctionArgs) => {
 	const videos = (await getVideos()).map((video) => {
-		const cld = new Cloudinary({ cloud: { cloudName: context.CLOUDINARY_CLOUD_NAME as string } }) // TODO: eliminate "as string"
+		const cld = new Cloudinary({ cloud: { cloudName: context.CLOUDINARY_CLOUD_NAME } })
 
 		return {
 			...video,
@@ -34,8 +34,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function Index() {
 	const videos = useLoaderData<typeof loader>()
-
-	console.log(videos)
 
 	return (
 		<div className="grid grid-cols-3 gap-4">

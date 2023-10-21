@@ -1,23 +1,15 @@
 import { drizzle } from "drizzle-orm/d1"
 import * as schema from "./schema.server"
 
-function contextHasDb(context: Record<string, unknown>): context is { DB: D1Database } {
-	return "DB" in context
-}
-
-const initializeDrizzleInstance = (context: Record<string, unknown>) => {
-	if (!contextHasDb(context)) {
-		throw new Error("No database in context")
-	}
-
-	return drizzle(context.DB, { schema })
+const initializeDrizzleInstance = (d1: D1Database) => {
+	return drizzle(d1, { schema })
 }
 
 let db: ReturnType<typeof initializeDrizzleInstance> | null = null
 
-export function initializeDb(context: Record<string, unknown>) {
+export function initializeDb(d1: D1Database) {
 	if (!db) {
-		db = initializeDrizzleInstance(context)
+		db = initializeDrizzleInstance(d1)
 	}
 }
 

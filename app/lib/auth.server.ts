@@ -1,17 +1,13 @@
+import { createCookieSessionStorage } from "@remix-run/cloudflare"
+import { eq } from "drizzle-orm"
 import { Authenticator } from "remix-auth"
 import { FormStrategy } from "remix-auth-form"
-import { eq } from "drizzle-orm"
-import { user } from "./schema.server"
-import type { NewUser, User } from "./schema.server"
 import { getDb } from "./db.server"
 import { hash, verify } from "./pbkdf2.server"
-import { createCookieSessionStorage } from "@remix-run/cloudflare"
+import type { NewUser, User } from "./schema.server"
+import { user } from "./schema.server"
 
 type UserSession = Pick<User, "id" | "username">
-
-function contextHasSecret(context: Record<string, unknown>): context is { SECRET_KEY: string } {
-	return "SECRET_KEY" in context
-}
 
 class Auth {
 	public authenticator
@@ -20,12 +16,8 @@ class Auth {
 	private db
 	private secretKey
 
-	constructor(context: Record<string, unknown>) {
-		if (!contextHasSecret(context)) {
-			throw new Error("No SECRET_KEY in context")
-		}
-
-		this.secretKey = context.SECRET_KEY
+	constructor(secretKey: string) {
+		this.secretKey = secretKey
 
 		this.sessionStorage = createCookieSessionStorage({
 			cookie: {
@@ -33,7 +25,7 @@ class Auth {
 				sameSite: "lax",
 				path: "/",
 				httpOnly: true,
-				secrets: [context.SECRET_KEY],
+				secrets: [secretKey],
 				secure: process.env.NODE_ENV === "production",
 			},
 		})
@@ -125,9 +117,9 @@ class Auth {
 
 let auth: Auth | null = null
 
-export const initializeAuth = (context: Record<string, unknown>) => {
+export const initializeAuth = (secretKey: string) => {
 	if (!auth) {
-		auth = new Auth(context)
+		auth = new Auth(secretKey)
 	}
 }
 
