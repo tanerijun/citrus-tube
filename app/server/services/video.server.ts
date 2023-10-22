@@ -23,6 +23,6 @@ export async function getVideosLike(pattern: string) {
 
 	return await db.query.video.findMany({
 		with: { owner: { columns: { id: true, username: true, profileImageUrl: true } } },
-		where: (video, { like }) => like(video.title, pattern),
+		where: (video, { like }) => like(video.title, `%${pattern}%`),
 	})
 }

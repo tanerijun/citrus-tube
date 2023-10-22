@@ -42,7 +42,7 @@ export default function HomeLayout() {
 				</Navbar>
 				<div className="flex flex-1">
 					<Sidebar />
-					<main className="p-4">
+					<main className="w-full p-4">
 						<Outlet />
 					</main>
 				</div>

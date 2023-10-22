@@ -33,16 +33,17 @@ export function Logo() {
 
 function Searchbar() {
 	return (
-		<div className="relative w-full max-w-lg">
-			<Input className="hidden pr-14 md:block" type="text" placeholder="Search videos" />
+		<Form method="GET" action="/video?index" className="relative w-full max-w-lg">
+			<Input type="text" name="q" className="hidden pr-14 md:block" placeholder="Search videos" />
 			<Button
+				type="submit"
 				className="absolute right-0 top-1/2 -translate-y-1/2"
 				variant="ghost"
 				aria-label="search"
 			>
 				<SearchIcon className="h-5 w-5" />
 			</Button>
-		</div>
+		</Form>
 	)
 }
 
