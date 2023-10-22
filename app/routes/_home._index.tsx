@@ -56,7 +56,10 @@ export default function Index() {
 								</Link>
 								<div className="flex flex-col">
 									<h3 className="line-clamp-2 font-bold">
-										<Link to={`video/${video.id}`} className="z-10">
+										<Link
+											to={`video/${video.id}`}
+											className="before:absolute before:inset-0 before:z-0 before:overflow-hidden before:whitespace-nowrap before:indent-[100] before:content-['']"
+										>
 											{video.title}
 										</Link>
 									</h3>
@@ -67,13 +70,6 @@ export default function Index() {
 										10 views · {formatDistanceToNowStrict(new Date(video.createdAt))} ago
 									</span>
 								</div>
-								{/* Link overlay for the whole card */}
-								<Link
-									to={`video/${video.id}`}
-									className="absolute inset-0 z-0 overflow-hidden whitespace-nowrap indent-[100%]"
-								>
-									Watch video
-								</Link>
 							</div>
 						</CardContent>
 					</Card>
