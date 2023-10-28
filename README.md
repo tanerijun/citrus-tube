@@ -2,9 +2,9 @@
 
 A citrus-flavored video sharing platform inspired by Youtube
 
-### Abandoned
+## Project Abandoned
 
-Abandoned this project:
+Abandoned this project.
 
 What I learned:
 
