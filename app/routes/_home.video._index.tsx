@@ -51,7 +51,7 @@ export default function VideoSearchPage() {
 	return (
 		<div className="flex flex-col gap-4">
 			{videos.map((video) => (
-				<Card key={video.id} className="relative h-full">
+				<Card key={video.id} className="h-full overflow-hidden">
 					<CardContent className="relative flex h-full gap-4 p-0">
 						<img src={video.thumbnailUrl} alt={video.title} />
 						<div className="flex flex-col py-2 pr-2">
