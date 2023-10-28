@@ -1,4 +1,4 @@
-import { json, redirect, type LoaderFunctionArgs } from "@remix-run/cloudflare"
+import { json, type LoaderFunctionArgs } from "@remix-run/cloudflare"
 import { Outlet, type MetaFunction } from "@remix-run/react"
 import { Navbar } from "~/routes/_home/navbar"
 import { Sidebar, SidebarProvider, SidebarTrigger } from "~/routes/_home/sidebar"
@@ -25,7 +25,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	const userData = await getUserData(userSession.id)
 
 	if (!userData) {
-		throw redirect("/login")
+		return getAuth().authenticator.logout(request, { redirectTo: "/login" })
 	}
 
 	const { username, profileImageUrl } = userData
